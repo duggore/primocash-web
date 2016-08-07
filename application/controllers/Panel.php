@@ -19,13 +19,6 @@ class Panel extends CI_Controller {
 		$user_id = $this->session->userdata('id');
 		$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($user_id);
 		$user = $this->Usuarios_model->read($user_id);
-		$cliente = $this->Clientes_model->read_email($user->email);
-		if($cliente)
-		{
-			//$data['cuentas'] = $this->Clientes_model->read_accounts($cliente->customer_id);
-		}else{
-			$data['cuentas'] = false;
-		}
  		$this->load->view('template/inicio_panel', $data);
 		$this->load->view('panel');
 		$this->load->view('template/fin_panel');
