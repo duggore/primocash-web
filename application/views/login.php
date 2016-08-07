@@ -1,5 +1,5 @@
 <?php if($this->session->flashdata('mensaje')){  ?>
-  	<div class="message teal center">
+  	<div class="message green lighten-3 center">
   		<h5 class="white-text"><?= $this->session->flashdata('mensaje'); ?></h5>
   	</div>
 <?php } ?>
