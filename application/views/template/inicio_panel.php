@@ -23,7 +23,7 @@
 		      			<li><a href="<?= base_url().$menu_permitido->url ?>"><?= $menu_permitido->description ?></a></li>
 		      	<?php }} ?>
 				<li><a href="<?= base_url() ?>perfil"><?= $username ?></a></li>
-		        <li><a href="<?= base_url() ?>home/cerrar_sesion" class="btn green darken-4">Cerrar Sesión</a></li>
+		        <li><a href="<?= base_url() ?>home/cerrar_sesion" class="btn-large green darken-4">Cerrar Sesión</a></li>
 		      </ul>
 		    </div>
 		    <ul class="side-nav" id="mobile-demo">
@@ -31,7 +31,7 @@
 		      			<li><a href="<?= base_url().$menu_permitido->url ?>"><?= $menu_permitido->description ?></a></li>
 		      	<?php }} ?>
 		      	<li><a href="<?= base_url() ?>perfil"><?= $username ?></a></li>
-		        <li><a href="<?= base_url() ?>home/cerrar_sesion" class="btn">Cerrar Sesión</a></li>
+		        <li><a href="<?= base_url() ?>home/cerrar_sesion" class="btn-large green darken-4">Cerrar Sesión</a></li>
 		    </ul>
 		</nav>        
 	</header>
