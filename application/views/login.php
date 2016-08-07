@@ -25,7 +25,7 @@
 	    </div>
 		<div class="row">
 			<div class="input-field col s12">
-				<input id="login" type="submit" class="col s12 m12 l12 btn-large" value="Iniciar Sesión" />
+				<input id="login" type="submit" class="col s12 m12 l12 btn-large green" value="Iniciar Sesión" />
 			</div>
 		</div>
 		<div class="row">
