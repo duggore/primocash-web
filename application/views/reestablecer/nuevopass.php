@@ -1,5 +1,5 @@
 <?php if($this->session->flashdata('mensaje')){  ?>
-    <div class="message teal center">
+    <div class="message green darken-2 center">
         <h5 class="white-text"><?= $this->session->flashdata('mensaje'); ?></h5>
     </div>
 <?php } ?>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="row">
-                <input type="submit" class="col s12 btn-large" value="Reestablecer mi contraseña" />
+                <input type="submit" class="col s12 btn-large green" value="Reestablecer mi contraseña" />
             </div>
         </form>
     </div>

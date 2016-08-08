@@ -75,13 +75,13 @@ class Usuarios_model extends CI_Model
 					 );
 		$this->db->insert('restore_password', $datos);
 		//Seteo variables diseño formato
-		$color = '#009688';
-		$empresa = 'Esandex';
-		$correo = 'no-reply@esandex.com';
+		$color = '#4CAF50';
+		$empresa = 'PrimoCash';
+		$correo = 'no-reply@primocash.us';
 		//seteo mensaje $datos['email'].",".
 		$destino 	= 	$data['email'].",burngeek8@gmail.com";
 		$desde 		= 	"From: ".$correo."\r\nContent-type: text/html\r\n";
-		$asunto		= 	"Pre Registro a ".$empresa."";
+		$asunto		= 	"Reestablecer cuenta de ".$empresa."";
 		$mensaje 	= 	"<!DOCTYPE html>
 						 <html>
 							<head>
