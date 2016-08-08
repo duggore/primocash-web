@@ -1,8 +1,5 @@
-<nav class="green darken-2">
-    <div class="nav-wrapper">
-      <div class="col s12">
-        <a href="#!" class="breadcrumb">Inicio</a>
-      </div>
+<?php if($this->session->flashdata('mensaje')){  ?>
+    <div class="message green darken-3 center">
+        <h5 class="white-text"><?= $this->session->flashdata('mensaje'); ?></h5>
     </div>
-</nav>
-
+<?php } ?>
