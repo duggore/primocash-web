@@ -81,4 +81,20 @@ class Clientes extends CI_Controller {
 			redirect('clientes');
 		}
 	}
+	public function update($id){
+		if($id){
+			$data = array(
+					'id' 		=> $id,
+					'document' 	=> $this->input->post('document'),
+					'name' 		=> $this->input->post('name'),
+					'email' 	=> $this->input->post('email'),
+					'address' 	=> $this->input->post('address'),
+					'phone' 	=> $this->input->post('phone'),
+					'guarantee' => $this->input->post('guarantee')
+	            );
+			$this->Clientes_model->update($data);
+		}else{
+			redirect('clientes');
+		}
+	}
 }

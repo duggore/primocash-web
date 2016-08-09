@@ -48,4 +48,9 @@ class Clientes_model extends CI_Model
         if($query -> num_rows() > 0) return $query;
         else return false;
     }
+    function update($data){
+        var_dump($data);
+        //$this->db->where('id', $id);
+        //$this->db->update('mytable', $data); 
+    }
 }
