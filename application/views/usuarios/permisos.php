@@ -7,6 +7,9 @@
 	  </div>
 	</div>
 </nav>
+<div class="progress">
+	<div class="indeterminate"></div>
+</div>
 <section class="container">
 	<div class="row">
 		<h4 class="green-text text-darken-2">Permisos para  <strong><?= $user->username ?></strong></h4>

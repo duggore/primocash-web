@@ -8,7 +8,7 @@
 </nav>
 <section class="container">
 	<?php if($this->session->flashdata('error')){  ?>
-	  	<div class="message teal center">
+	  	<div class="message green center">
 	  		<h5 class="white-text"><?= $this->session->flashdata('error'); ?></h5>
 	  	</div>
   	<?php } ?>
@@ -16,15 +16,14 @@
 		<?php foreach ($users->result() as $user) { ?>	
 			<div class="card small col s12 m6 l3">
 			    <div class="card-image waves-effect waves-block waves-light">
-			      <img class="activator" src="data:image/png;base64,<?= $user->avatar ?>">
+			      <img class="activator" src="<?= base_url() ?>materialize/images/sin-foto.png">
 			    </div>
 			    <div class="card-content">
 			      <span class="card-title activator grey-text text-darken-4"><?= $user->username ?><i class="material-icons right">more_vert</i></span>
-			      <p><a href="usuarios/editar/<?= $user->user_id ?>">editar</a></p>
 			      <p><a href="usuarios/permisos/<?= $user->user_id ?>">permisos</a></p>
 			    </div>
 			    <div class="card-reveal">
-			      <span class="card-title grey-text text-darken-4"><?= $user->firts_name ?><i class="material-icons right">close</i></span>
+			      <span class="card-title grey-text text-darken-4"><?= $user->first_name ?><i class="material-icons right">close</i></span>
 			      <p><i class="material-icons">email</i><?= $user->email ?></p>
 			    </div>
 			</div>

@@ -72,12 +72,12 @@ class Registro_model extends CI_Model
 								<meta name='HandheldFriendly' content='true'>		
 							</head>
 							<body style='margin: 0; background: #efefef; overflow: hidden; padding: 0 20px; font-size: 18px;'>
-								<div style='background: ".$color."; max-height: 45px;'>
+								<div style='background: ".$color."; max-height: 45px; padding: 10px; color: #e9e9e9'>
 									<!--<img src='".base_url()."/template/images/logo.png' height='45'>-->
 									". $empresa ."
 								</div>
 								<div>
-									<h1 style='color: ".$color."; font-size: 25px; font-weight: normal; '>¡Tu cuenta de <strong style='color: ".$color.";'> IMP </strong> ya está casi lista! </h1>
+									<h1 style='color: ".$color."; font-size: 25px; font-weight: normal; '>¡Tu cuenta de <strong style='color: ".$color.";'> ".$empresa." </strong> ya está casi lista! </h1>
 									<p>Tu correo es <strong style='color: ".$color.";'>".$data['email']."</strong></p>
 									<p>Ahora lo que necesitas es un <strong style='color: ".$color.";'>Usuario </strong>y una <strong style='color: ".$color.";'>Contraseña</strong>, da clic al enlace para crear tu usuario.</p>
 									<a href='".base_url()."confirmar-usuario/".$token."' style='cursor: pointer; background: ".$color."; text-decoration: none; border-radius: 5px; color: #e9e9e9; font-weight: bolder; padding: 10px 50px;'>Crear usuario</a>

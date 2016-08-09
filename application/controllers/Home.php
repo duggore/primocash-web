@@ -24,4 +24,12 @@ class Home extends CI_Controller {
 			$this->load->view('template/fin');
 		}
 	}
+	public function cerrar_sesion()
+	{
+		$usuario_data = array(
+         'logueado' => FALSE
+		);
+		$this->session->set_userdata($usuario_data);
+		redirect(base_url());
+	}
 }
