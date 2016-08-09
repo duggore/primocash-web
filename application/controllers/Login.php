@@ -4,9 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Login extends CI_Controller {
 
 	function __construct(){
-		parent::__construct();
+		parent::__construct();	
 		$this->load->model('Usuarios_model');
-
 	}
 	public function index()
 	{
@@ -39,9 +38,5 @@ class Login extends CI_Controller {
 			$this->session->set_flashdata('mensaje', 'Combinación erronea');
 			redirect('login');
 		}
-		
-		
-		//$this->session->set_userdata('username', $data['username']); 
-		//echo $this->session->userdata('username');
 	}
 }
