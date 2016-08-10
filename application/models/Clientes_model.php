@@ -48,4 +48,17 @@ class Clientes_model extends CI_Model
         if($query -> num_rows() > 0) return $query;
         else return false;
     }
+    function update($data){
+        $datos = array(
+                'customer_document'     => $data['document'], 
+                'customer_name'         => $data['name'], 
+                'customer_email'        => $data['email'], 
+                'customer_address'      => $data['address'], 
+                'customer_phone'        => $data['phone'],
+                'customer_guarantee'    => $data['guarantee']
+            );
+        
+        $this->db->where('customer_id', $data['id']);
+        $this->db->update('customers', $datos); 
+    }
 }
