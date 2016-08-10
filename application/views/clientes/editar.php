@@ -7,7 +7,15 @@
 	  </div>
 	</div>
 </nav>
+<div class="progress">
+  	<div class="indeterminate"></div>
+</div>
 <section class="container">
+	<?php if($this->session->flashdata('message')){  ?>
+	  	<div class="message green center">
+	  		<h5 class="white-text"><?= $this->session->flashdata('message'); ?></h5>
+	  	</div>
+	<?php } ?>
 	<div class="row">
 		<h4 class="green-text text-darken-2">Editando <strong><?= $cliente->customer_name ?></strong></h4>
 	</div>

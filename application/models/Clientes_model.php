@@ -49,8 +49,16 @@ class Clientes_model extends CI_Model
         else return false;
     }
     function update($data){
-        var_dump($data);
-        //$this->db->where('id', $id);
-        //$this->db->update('mytable', $data); 
+        $datos = array(
+                'customer_document'     => $data['document'], 
+                'customer_name'         => $data['name'], 
+                'customer_email'        => $data['email'], 
+                'customer_address'      => $data['address'], 
+                'customer_phone'        => $data['phone'],
+                'customer_guarantee'    => $data['guarantee']
+            );
+        
+        $this->db->where('customer_id', $data['id']);
+        $this->db->update('customers', $datos); 
     }
 }

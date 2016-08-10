@@ -93,6 +93,8 @@ class Clientes extends CI_Controller {
 					'guarantee' => $this->input->post('guarantee')
 	            );
 			$this->Clientes_model->update($data);
+			$this->session->set_flashdata('message', 'El cliente fué actualizado correctamente');
+			redirect('clientes/editar/'.$id);
 		}else{
 			redirect('clientes');
 		}
