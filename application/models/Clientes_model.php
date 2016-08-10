@@ -8,10 +8,15 @@ class Clientes_model extends CI_Model
 		parent::__construct();
 	}
     function create($data){
-        $datos = array( 'customer_name'     => $data['name'],
-                        'customer_email'    => $data['email'],
-                        'username_register' => $data['username']
-                      );
+        $datos = array( 
+                'customer_document'     => $data['document'], 
+                'customer_name'         => $data['name'], 
+                'customer_email'        => $data['email'], 
+                'customer_address'      => $data['address'], 
+                'customer_phone'        => $data['phone'],
+                'customer_guarantee'    => $data['guarantee'],
+                'username_register'     => $data['username']
+            );
         $this->db->insert('customers', $datos);
     }
     function create_account($data){

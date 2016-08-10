@@ -61,8 +61,12 @@ class Clientes extends CI_Controller {
 	}
 	public function insertar(){
 		$data = array(	
-						'name' 		=> $this->input->post('name'), 
+						'document' 	=> $this->input->post('document'),
+						'name' 		=> $this->input->post('name'),
 						'email' 	=> $this->input->post('email'),
+						'address' 	=> $this->input->post('address'),
+						'phone' 	=> $this->input->post('phone'),
+						'guarantee' => $this->input->post('guarantee'),
 						'username' 	=> $this->session->userdata('username'),
 					 );
 		$this->Clientes_model->create($data);
