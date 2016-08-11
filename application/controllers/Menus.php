@@ -61,6 +61,7 @@ class Menus extends CI_Controller {
 						'page' 			=> $this->input->post('page')
 					 );
 		$this->Menus_model->update($id, $data);
+		$this->session->set_flashdata('mensaje', 'Menú actualizado correctamente');
 		redirect('menus');
 	}
 	public function delete($id){

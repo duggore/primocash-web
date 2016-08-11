@@ -1,4 +1,4 @@
-<nav class="teal lighten-1">
+<nav class="green lighten-1">
 	<div class="nav-wrapper">
 	  <div class="col s12">
 	    <a href="panel" class="breadcrumb">Inicio</a>
@@ -9,7 +9,7 @@
 </nav>
 <section class="container">
 	<div class="row">
-		<h4 class="teal-text text-darken-2">Nuevo menu</h4>
+		<h4 class="green-text text-darken-2">Nuevo menu</h4>
 	</div>
 	<form action="insertar" method="post">
 		<div class="row">
@@ -26,7 +26,7 @@
 		</div>
         <div class="row">
 	        <div class="input-field col s12">
-	          <input type="submit" class="btn-large teal col s12">
+	          <input type="submit" class="btn-large green col s12">
 	        </div>
         </div>
 	</form>

@@ -1,21 +1,21 @@
-<nav class="green lighten-1">
-	<div class="nav-wrapper">
-	  <div class="col s12">
-	    <a href="panel" class="breadcrumb">Inicio</a>
-	    <a href="<?= base_url() ?>clientes" class="breadcrumb">Clientes</a>
-	    <a href="#!" class="breadcrumb">Nuevo</a>
-	  </div>
-	</div>
+<nav class="green darken-2">
+    <div class="nav-wrapper">
+      <div class="col s12">
+        <a href="panel" class="breadcrumb">Inicio</a>
+        <a href="clientes" class="breadcrumb">Contratos</a>
+        <a href="clientes" class="breadcrumb">Nuevo</a>
+      </div>
+    </div>
 </nav>
 <section class="container">
 	<div class="row">
-		<h4 class="green-text text-darken-2">Nuevo cliente</h4>
+		<h4 class="green-text text-darken-2">Nuevo contrato</h4>
 	</div>
 	<form action="insertar" method="post">
 		<div class="row">
 			<div class="input-field col s12 m6">
-	          <input id="document" name="document" type="text" class="validate" placeholder="Opcional">
-	          <label for="document">Doc Identidad</label>
+	          	<input type="text" id="autocomplete-input" class="autocomplete clientes">
+          		<label for="autocomplete-input">Autocomplete</label>
 	        </div>
 			<div class="input-field col s12 m6">
 	          <input id="name" name="name" type="text" class="validate" required>
@@ -26,7 +26,7 @@
 	          <label for="email">Email</label>
 	        </div>
 	        <div class="input-field col s12 m6">
-	          <input id="address" name="address" type="text" class="validate" placeholder="Opcional">
+	          <input id="address" name="address" type="text" class="validate" required>
 	          <label for="address">Dirección</label>
 	        </div>
 	        <div class="input-field col s12 m6">
