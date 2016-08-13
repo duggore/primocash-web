@@ -27,7 +27,8 @@ class Clientes_model extends CI_Model
         $this->db->insert('customer_accounts', $datos);
     }
 	function read_all(){
-		$query = $this->db->get('customers');
+        $this->db->order_by('customer_name', 'ASC');
+        $query = $this->db->get('customers');
 		if($query -> num_rows() > 0) return $query;
 		else return false;
 	}
