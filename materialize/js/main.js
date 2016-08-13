@@ -4,7 +4,7 @@ $(document).ready(function(){
         $('.message').css({'display': 'none'});
         $('.progress').css({'display': 'block'})
     });
-    $('input.autocomplete.clientes').autocomplete(clientes());        
+    clientes();    
 });
 function permiso_menu(e, id_menu, id_user)
 {
@@ -15,12 +15,9 @@ function permiso_menu(e, id_menu, id_user)
     window.location.href = url;
 }
 function clientes(){
-    var json = {
-                data: {
-                  "Apple": null,
-                  "Microsoft": null,
-                  "Google": 'http://placehold.it/250x250'
-                }
-            }
-    return json;
+    console.log('Clientes fue ejecutado');
+    $.getJSON("http://api.primocash.us/", function(data){
+        console.log(data);
+        $('input.autocomplete.clientes').autocomplete(data);               
+    });
 }

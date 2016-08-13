@@ -13,25 +13,22 @@
 	</div>
 	<form action="insertar" method="post">
 		<div class="row">
-			<div class="input-field col s12 m6">
-	          	<input type="text" id="autocomplete-input" class="autocomplete clientes">
-          		<label for="autocomplete-input">Autocomplete</label>
+			<div class="input-field col s12 m4">
+	          	<input type="text" id="cliente" name="cliente" class="autocomplete clientes">
+          		<label for="cliente">Cliente</label>
+            </div>
+	        <div class="input-field col s6 m3">
+	          <input id="capital" name="capital" type="number" class="validate" required>
+	          <label for="capital">Capital de Prestamo</label>
 	        </div>
-			<div class="input-field col s12 m6">
-	          <input id="name" name="name" type="text" class="validate" required>
-	          <label for="name">Nombre completo</label>
-	        </div>
-	        <div class="input-field col s12 m6">
-	          <input id="email" name="email" type="text" class="validate" required>
-	          <label for="email">Email</label>
-	        </div>
-	        <div class="input-field col s12 m6">
-	          <input id="address" name="address" type="text" class="validate" required>
-	          <label for="address">Dirección</label>
-	        </div>
-	        <div class="input-field col s12 m6">
-	          <input id="phone" name="phone" type="text" class="validate" required>
-	          <label for="phone">Telefono</label>
+            <div class="input-field col s6 m3">
+              <input id="porcentaje" name="porcentaje" type="number" class="validate" required>
+              <label for="porcentaje">Porcentaje Mensual</label>
+            </div>
+
+	        <div class="input-field col s12 m2">
+	          <input id="phone" name="phone" type="text" class="validate" placeholder="Nro. Meses" required>
+	          <label for="phone">Fraccionamiento</label>
 	        </div>
 	        <div class="input-field col s12 m6">
 	          <input id="guarantee" name="guarantee" type="text" class="validate" required>
