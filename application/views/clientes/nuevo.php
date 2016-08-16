@@ -33,10 +33,6 @@
 	          <input id="phone" name="phone" type="text" class="validate" required>
 	          <label for="phone">Telefono</label>
 	        </div>
-	        <div class="input-field col s12 m6">
-	          <input id="guarantee" name="guarantee" type="text" class="validate" required>
-	          <label for="guarantee">Garante</label>
-	        </div>
 		</div>
         <div class="row">
 	        <div class="input-field col s12">

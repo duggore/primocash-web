@@ -4,6 +4,7 @@ $(document).ready(function(){
         $('.message').css({'display': 'none'});
         $('.progress').css({'display': 'block'})
     });
+    $('.modal-trigger').leanModal();
     clientes();    
 });
 function permiso_menu(e, id_menu, id_user)

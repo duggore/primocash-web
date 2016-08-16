@@ -7,15 +7,17 @@
     </div>
 </nav>
 <section class="container">
+    <?php if($this->session->flashdata('message')){  ?>
+        <div class="message green center">
+            <h5 class="white-text"><?= $this->session->flashdata('message'); ?></h5>
+        </div>
+    <?php } ?>
 	<?php if($clientes != false){ ?>
         <ul class="collection with-header">
     		<?php foreach ($clientes->result() as $cliente) { ?>				
             <li class="collection-item">
             	<div>
-            		<a href="<?= $cliente->customer_id ?>"><?= $cliente->customer_name ?></a>
-    	        	<a class="secondary-content" href="clientes/delete/<?= $cliente->customer_id ?>">
-    	        		<i class="material-icons green-text">delete</i>
-    	        	</a>
+            		<a href="#!"><?= $cliente->customer_name ?></a>
     	        	<a class="secondary-content" href="clientes/editar/<?= $cliente->customer_id ?>" >
     	        		<i class="material-icons green-text">edit</i>
     	        	</a>

@@ -14,10 +14,12 @@ class Clientes_model extends CI_Model
                 'customer_email'        => $data['email'], 
                 'customer_address'      => $data['address'], 
                 'customer_phone'        => $data['phone'],
-                'customer_guarantee'    => $data['guarantee'],
                 'username_register'     => $data['username']
             );
         $this->db->insert('customers', $datos);
+    }
+    function delete($id){
+        $this->db->delete('customers', array('customer_id' => $id));
     }
     function create_account($data){
         $datos = array( 'currency'          => $data['currency'],
@@ -47,11 +49,12 @@ class Clientes_model extends CI_Model
         if($query -> num_rows() > 0) return $result;
         else return false;
     }
-    function read_accounts($id)
+    function read_phone($phone)
     {
-        $this->db->where('customer_id', $id);
-        $query = $this->db->get('customer_accounts');
-        if($query -> num_rows() > 0) return $query;
+        $this->db->where('customer_phone', $phone);
+        $query = $this->db->get('customers');
+        $result = $query->row();
+        if($query -> num_rows() > 0) return $result;
         else return false;
     }
     function update($data){
@@ -60,11 +63,26 @@ class Clientes_model extends CI_Model
                 'customer_name'         => $data['name'], 
                 'customer_email'        => $data['email'], 
                 'customer_address'      => $data['address'], 
-                'customer_phone'        => $data['phone'],
-                'customer_guarantee'    => $data['guarantee']
+                'customer_phone'        => $data['phone']
             );
         
         $this->db->where('customer_id', $data['id']);
         $this->db->update('customers', $datos); 
+    }
+    //Auditoria clientes
+    function auditory($data)
+    {
+        $datos = array(
+                        'customer_id'       => $data['id'],
+                        'customer_document' => $data['document'],
+                        'customer_name'     => $data['name'],
+                        'customer_email'    => $data['email'],
+                        'customer_address'  => $data['address'],
+                        'customer_phone'    => $data['phone'],
+                        'date_register'     => $data['date_register'],
+                        'event'             => $data['event'],
+                        'username_update'   => $data['username']
+                      );
+        $this->db->insert('audit_customer', $datos);
     }
 }
