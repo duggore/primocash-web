@@ -3001,8 +3001,7 @@ $(document).ready(function(){
       var defaults = {
         data: {}
       };
-      console.log(options);
-
+      
       options = $.extend(defaults, options);
 
       return this.each(function() {

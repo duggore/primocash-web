@@ -56,15 +56,25 @@ class Clientes extends CI_Controller {
 		$this->load->view('template/fin_panel');
 	}
 	public function insertar(){
-		$data = array(	
+		$phone = $this->input->post('phone');
+		$validate = $this->Clientes_model->read_phone($phone);
+		if($validate->customer_phone == $phone)
+		{
+			//Seteo de mensaje para el usuario
+			$this->session->set_flashdata('message', 'Este numero de Celular ya se encuentra registrado en otro cliente');
+			redirect('clientes/nuevo');
+		}else{
+			$data = array(	
 						'document' 	=> $this->input->post('document'),
 						'name' 		=> $this->input->post('name'),
 						'email' 	=> $this->input->post('email'),
 						'address' 	=> $this->input->post('address'),
-						'phone' 	=> $this->input->post('phone'),
+						'phone' 	=> $phone,
 						'username' 	=> $this->session->userdata('username')
 					 );
-		$this->Clientes_model->create($data);
+			$this->session->set_flashdata('message', 'Cliente creado correctamente');
+			$this->Clientes_model->create($data);
+		}
 		redirect('clientes');
 	}
 	public function editar($id){

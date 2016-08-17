@@ -15,8 +15,22 @@ function editar(){
     localStorage.setItem('ultimo', ultimo);
 }
 function ultimo_visto(){
-    var elemento = '#' + localStorage.getItem('ultimo');
-    $('.ultimo_visto').append($(elemento));
+    var ultimo = localStorage.getItem('ultimo');
+    var elemento = '#' + ultimo;
+    console.log(elemento);
+    if(ultimo != null){
+        if($(elemento).length){
+            console.log('existe elemento')
+            $('.ultimo_visto').append($(elemento));
+        }else{
+            console.log('El elemento no existe')
+            $('.ultimo_visto').css({'display': 'none'});
+        }
+        console.log('si existe localStorage');
+    }else{
+        console.log('No existe localStorage');            
+        $('.ultimo_visto').css({'display': 'none'});
+    }
     console.log('Se movio');
 }
 function permiso_menu(e, id_menu, id_user)
