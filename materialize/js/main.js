@@ -5,8 +5,20 @@ $(document).ready(function(){
         $('.progress').css({'display': 'block'})
     });
     $('.modal-trigger').leanModal();
+    $('.btn-edit').on('click', editar);
     clientes();    
+    ultimo_visto();
 });
+function editar(){
+    var ultimo = $(this).parent('div').parent('li').attr('id');
+    console.log(ultimo);
+    localStorage.setItem('ultimo', ultimo);
+}
+function ultimo_visto(){
+    var elemento = '#' + localStorage.getItem('ultimo');
+    $('.ultimo_visto').append($(elemento));
+    console.log('Se movio');
+}
 function permiso_menu(e, id_menu, id_user)
 {
     $('.progress').css({'display': 'block'})
@@ -18,7 +30,7 @@ function permiso_menu(e, id_menu, id_user)
 function clientes(){
     console.log('Clientes fue ejecutado');
     $.getJSON("http://api.primocash.us/", function(data){
-        console.log(data);
+        //console.log(data);
         $('input.autocomplete.clientes').autocomplete(data);               
     });
 }

@@ -12,13 +12,18 @@
             <h5 class="white-text"><?= $this->session->flashdata('message'); ?></h5>
         </div>
     <?php } ?>
+    <ul class="collection with-header ultimo_visto">
+        <li class="collection-header"><h4>Ultimo visto</h4></li>
+    </ul>
+    <div class="divider"></div>
 	<?php if($clientes != false){ ?>
         <ul class="collection with-header">
+            <li class="collection-header"><h4>Todos los clientes</h4></li>
     		<?php foreach ($clientes->result() as $cliente) { ?>				
-            <li class="collection-item">
+            <li id="<?= $cliente->customer_id ?>" class="collection-item">
             	<div>
             		<a href="#!"><?= $cliente->customer_name ?></a>
-    	        	<a class="secondary-content" href="clientes/editar/<?= $cliente->customer_id ?>" >
+    	        	<a class="secondary-content btn-edit" href="clientes/editar/<?= $cliente->customer_id ?>" >
     	        		<i class="material-icons green-text">edit</i>
     	        	</a>
             	</div>
