@@ -88,8 +88,10 @@ class Usuarios extends CI_Controller {
 	public function permisoMenu($estado, $id_user, $id_menu){	
 		if($estado == 'true'){
 			$this->Usuarios_model->insertar_permiso_menu($id_user, $id_menu);
+			$this->session->set_flashdata('mensaje', 'Permiso actualizado correctamente');
 		}else{
 			$this->Usuarios_model->eliminar_permiso_menu($id_user, $id_menu);
+			$this->session->set_flashdata('mensaje', 'Permiso actualizado correctamente');
 		}
 		redirect('usuarios/permisos/'.$id_user);
 	}	

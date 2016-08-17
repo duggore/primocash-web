@@ -8,13 +8,18 @@
 	</div>
 </nav>
 <section class="container">
+	 <?php if($this->session->flashdata('message')){  ?>
+        <div class="message green center">
+            <h5 class="white-text"><?= $this->session->flashdata('message'); ?></h5>
+        </div>
+    <?php } ?>
 	<div class="row">
 		<h4 class="green-text text-darken-2">Nuevo cliente</h4>
 	</div>
 	<form action="insertar" method="post">
 		<div class="row">
 			<div class="input-field col s12 m6">
-	          <input id="document" name="document" type="text" class="validate" required>
+	          <input id="document" name="document" type="text" class="validate" placeholder="Opcional">
 	          <label for="document">Doc Identidad</label>
 	        </div>
 			<div class="input-field col s12 m6">
@@ -26,16 +31,12 @@
 	          <label for="email">Email</label>
 	        </div>
 	        <div class="input-field col s12 m6">
-	          <input id="address" name="address" type="text" class="validate" required>
+	          <input id="address" name="address" type="text" class="validate" placeholder="Opcional">
 	          <label for="address">Dirección</label>
 	        </div>
 	        <div class="input-field col s12 m6">
 	          <input id="phone" name="phone" type="text" class="validate" required>
 	          <label for="phone">Telefono</label>
-	        </div>
-	        <div class="input-field col s12 m6">
-	          <input id="guarantee" name="guarantee" type="text" class="validate" required>
-	          <label for="guarantee">Garante</label>
 	        </div>
 		</div>
         <div class="row">

@@ -22,33 +22,29 @@ class Clientes extends CI_Controller {
 		$this->load->view('clientes/index');
 		$this->load->view('template/fin_panel');
 	}
-	public function cuentas($id, $accion = '')
-	{
-		$data = array();
-		$data['username'] = $this->session->userdata('username');
-		$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
-		$data['cliente'] = $this->Clientes_model->read($id);
-		if($accion == '')
-		{
-			//Listado de cuentas
-			$data['cuentas'] = $this->Clientes_model->read_accounts($id);
-			$this->load->view('template/inicio_panel', $data);
-			$this->load->view('clientes/cuentas/listar');
-			$this->load->view('template/fin_panel');
-		}elseif ($accion == 'nuevo') {
-			//Formulario de crear nueva cuenta
-			$this->load->view('template/inicio_panel', $data);
-			$this->load->view('clientes/cuentas/nuevo');
-			$this->load->view('template/fin_panel');	
-		}elseif($accion == 'insertar'){
-			//Insertar la cuenta nueva
-			$data = array(	
-						'currency' 		=> $this->input->post('currency'), 
-						'customer_id' 	=> $id,
-						'username' 		=> $this->session->userdata('username')
-					 	);
-			$this->Clientes_model->create_account($data);
-			redirect('clientes/cuentas/'. $id);
+	public function delete($id){
+		if ($id) {
+			//Obtener el ultimo estado del cliente
+			$customer = $this->Clientes_model->read($id);
+			$data = array(
+							'id' 			=> $id,
+							'document' 		=> $customer->customer_document,
+							'name' 			=> $customer->customer_name,
+							'email' 		=> $customer->customer_email,
+							'address' 		=> $customer->customer_address,
+							'phone' 		=> $customer->customer_phone,
+							'date_register'	=> $customer->date_register,
+							'event'			=> 'Eliminación del cliente',
+							'username' 	=> $this->session->userdata('username')
+			            );
+			//Insertar el cambio en la auditoria
+			$this->Clientes_model->auditory($data);
+			//Borrar cliente
+			$this->Clientes_model->delete($id);
+			$this->session->set_flashdata('message', 'El cliente fue eliminado correctamente');
+			redirect('clientes');
+		}else{
+			redirect('clientes');
 		}
 	}
 	public function nuevo(){
@@ -60,12 +56,25 @@ class Clientes extends CI_Controller {
 		$this->load->view('template/fin_panel');
 	}
 	public function insertar(){
-		$data = array(	
-						'name' 		=> $this->input->post('name'), 
+		$phone = $this->input->post('phone');
+		$validate = $this->Clientes_model->read_phone($phone);
+		if($validate->customer_phone == $phone)
+		{
+			//Seteo de mensaje para el usuario
+			$this->session->set_flashdata('message', 'Este numero de Celular ya se encuentra registrado en otro cliente');
+			redirect('clientes/nuevo');
+		}else{
+			$data = array(	
+						'document' 	=> $this->input->post('document'),
+						'name' 		=> $this->input->post('name'),
 						'email' 	=> $this->input->post('email'),
-						'username' 	=> $this->session->userdata('username'),
+						'address' 	=> $this->input->post('address'),
+						'phone' 	=> $phone,
+						'username' 	=> $this->session->userdata('username')
 					 );
-		$this->Clientes_model->create($data);
+			$this->session->set_flashdata('message', 'Cliente creado correctamente');
+			$this->Clientes_model->create($data);
+		}
 		redirect('clientes');
 	}
 	public function editar($id){
@@ -82,21 +91,45 @@ class Clientes extends CI_Controller {
 		}
 	}
 	public function update($id){
+		$phone = $this->input->post('phone');
 		if($id){
-			$data = array(
-					'id' 		=> $id,
-					'document' 	=> $this->input->post('document'),
-					'name' 		=> $this->input->post('name'),
-					'email' 	=> $this->input->post('email'),
-					'address' 	=> $this->input->post('address'),
-					'phone' 	=> $this->input->post('phone'),
-					'guarantee' => $this->input->post('guarantee')
-	            );
-			$this->Clientes_model->update($data);
-			$this->session->set_flashdata('message', 'El cliente fué actualizado correctamente');
-			redirect('clientes/editar/'.$id);
+			$customer = $this->Clientes_model->read($id);
+			if($customer){
+				$validate = $this->Clientes_model->read_phone($phone);
+				if($validate->customer_phone == $phone)
+				{
+					//Seteo de mensaje para el usuario
+					$this->session->set_flashdata('message', 'Este numero de Celular ya se encuentra registrado en otro cliente');
+					redirect('clientes/editar/'.$id);
+				}else{
+					$data = array(
+							'id' 			=> $id,
+							'document' 		=> $this->input->post('document'),
+							'name' 			=> $this->input->post('name'),
+							'email' 		=> $this->input->post('email'),
+							'address' 		=> $this->input->post('address'),
+							'phone' 		=> $phone,
+							'date_register'	=> $customer->date_register,
+							'event'			=> 'Actualizacion de datos del cliente',
+							'username' 	=> $this->session->userdata('username')
+			            );
+					//Insertar el cambio en la auditoria
+					$this->Clientes_model->auditory($data);
+					//Actualizar dartos del cliente
+					$this->Clientes_model->update($data);
+					//Seteo de mensaje para el usuario
+					$this->session->set_flashdata('message', 'El cliente fué actualizado correctamente');
+					redirect('clientes/editar/'.$id);
+				}
+			}else{
+				//Seteo de mensaje para el usuario
+				$this->session->set_flashdata('message', 'Algo raro pasó, no he podido encontrar este cliente');
+				redirect('clientes/editar/'.$id);
+			}
 		}else{
-			redirect('clientes');
+			//Seteo de mensaje para el usuario
+			$this->session->set_flashdata('message', 'Algo raro pasó, no he podido encontrar este cliente');
+			redirect('clientes/editar/'.$id);
 		}
 	}
 }
