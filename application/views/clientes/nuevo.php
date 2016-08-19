@@ -1,4 +1,4 @@
-<nav class="green lighten-1">
+<nav class="green darken-2">
 	<div class="nav-wrapper">
 	  <div class="col s12">
 	    <a href="panel" class="breadcrumb">Inicio</a>

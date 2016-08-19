@@ -48,3 +48,25 @@ function clientes(){
         $('input.autocomplete.clientes').autocomplete(data);               
     });
 }
+function prestamo(capital, porcentaje, meses, fecha_inicio){
+            var fecha       = new Date(fecha_inicio);
+            capital         = capital,
+            porcentaje      = porcentaje,
+            meses           = meses,
+            interes_mensual = ((capital * porcentaje) /100),
+            interes_total   = interes_mensual * meses,
+            total           = capital + interes_total,
+            ultima_cuota    = interes_mensual + capital;
+
+            for(i=0; i < meses; i++){
+                fecha.setMonth(fecha.getMonth() + 1);
+                var month   = fecha.getMonth()+1;
+                var day     = fecha.getDate();
+                var year    = fecha.getFullYear();
+                if(i != (meses - 1)){
+                    console.log('mes: ' + (i+1) + '\n Cuota a pagar: '+ interes_mensual +'.00 $USD\n fecha de pago: ' + day + '/' + month + '/' + year +'\n\n');
+                }else{
+                    console.log('mes: ' + (i+1) + '\n Cuota a pagar: '+ ultima_cuota +'.00 $USD \n fecha de pago: ' + day + '/' + month + '/' + year +'\n\n');
+                }
+            }
+        }
