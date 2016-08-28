@@ -14,11 +14,11 @@
             <div class="row">
                 <div class="input-field col s12 m4">
                     <input id="customer_id" type="hidden" name="customer_id">
-                    <input type="text" id="cliente" name="cliente" class="autocomplete clientes">
+                    <input type="text" id="cliente" name="cliente" class="autocomplete clientes" required>
                     <label for="cliente">Cliente</label>
                 </div>
                 <div class="input-field col s6 m2">
-                    <input id="fecha_inicio" type="date" name="" class="datepicker">
+                    <input id="fecha_inicio" type="date" name="" class="datepicker" required>
                     <label for="fecha_inicio">Fecha inicio</label>
                 </div> 
                 <div class="input-field col s6 m3">
@@ -31,8 +31,8 @@
                 </div>
 
                 <div class="input-field col s12 m2">
-                  <input id="phone" name="phone" type="text" class="validate" placeholder="Nro. Meses" required>
-                  <label for="phone">Fraccionamiento</label>
+                  <input id="fraccionamiento" name="fraccionamiento" type="text" class="validate" placeholder="Nro. Meses" required>
+                  <label for="fraccionamiento">Fraccionamiento</label>
                 </div>
                 <div class="input-field col s12 m10">
                   <input id="guarantee" name="guarantee" type="text" class="validate" required>
@@ -41,7 +41,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 m6">
-                  <input type="submit" class="btn-large grey col s12" value="Previsualizar">
+                  <input id="preview" type="submit" class="btn-large grey col s12" value="Previsualizar">
                 </div>
                 <div class="input-field col s12 m6">
                   <input type="submit" class="btn-large green col s12" value="Confirmar">
@@ -49,6 +49,7 @@
             </div>
         </form>
     </section>
+
     <section class="col s12 l4">
         <h4 class="green-text text-darken-2">Pre Contrato</h4>
         <div class="card">

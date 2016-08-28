@@ -13,11 +13,28 @@ $(document).ready(function(){
     $('#cliente').focusout(buscar_cliente);
     clientes();    
     ultimo_visto();
-    prestamo(15000, 4, 12, '03/15/2016');
+    $('#preview').on('click', preview);
 });
+function preview(){
+    var cliente         = $('#cliente').val(),
+        fecha_inicio    = $('#fecha_inicio').val(),
+        capital         = parseInt($('#capital').val()),
+        porcentaje      = $('#porcentaje').val(),
+        meses           = $('#fraccionamiento').val(),
+        guarantee       = $('#guarantee').val();
+        if(fecha_inicio == ''){
+            console.log('Fecha no encontrada');
+        }else
+        {
+            console.log(fecha_inicio);
+        }
+    console.log(cliente + fecha_inicio + capital + porcentaje + fraccionamiento + guarantee);
+    prestamo(capital, porcentaje, meses, fecha_inicio);
+    return false;
+}
 function buscar_cliente(){
     setTimeout(function(){ 
-        var input_cliente = $('#cliente').val()
+        var input_cliente = $('#cliente').val(),
             url_base = "http://localhost:8080/primocash-api",
             controlador = 'clientes',
             metodo = 'nombre',
@@ -73,6 +90,7 @@ function clientes(){
     });
 }
 function prestamo(capital, porcentaje, meses, fecha_inicio){
+            $('#cuotas').html('');
             var fecha       = new Date(fecha_inicio);
             capital         = capital,
             porcentaje      = porcentaje,
@@ -81,7 +99,7 @@ function prestamo(capital, porcentaje, meses, fecha_inicio){
             interes_total   = interes_mensual * meses,
             total           = capital + interes_total,
             ultima_cuota    = interes_mensual + capital;
-
+            $('#pre_capital').html(capital + '.00 $USD');
             for(i=0; i < meses; i++){
                 fecha.setMonth(fecha.getMonth() + 1);
                 var month   = fecha.getMonth()+1;
