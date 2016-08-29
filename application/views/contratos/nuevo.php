@@ -18,7 +18,7 @@
                     <label for="cliente">Cliente</label>
                 </div>
                 <div class="input-field col s6 m2">
-                    <input id="fecha_inicio" type="date" name="" class="datepicker" required>
+                    <input id="fecha_inicio" type="date" name="date_initial" class="datepicker" required>
                     <label for="fecha_inicio">Fecha inicio</label>
                 </div> 
                 <div class="input-field col s6 m3">
@@ -26,7 +26,7 @@
                   <label for="capital">Capital de Prestamo</label>
                 </div>
                 <div class="input-field col s6 m3">
-                  <input id="porcentaje" name="porcentaje" type="number" min="0"  class="validate" required>
+                  <input id="porcentaje" name="percentage" type="number" min="0"  class="validate" required>
                   <label for="porcentaje">Porcentaje Mensual</label>
                 </div>
 
