@@ -12,6 +12,25 @@
             <h5 class="white-text"><?= $this->session->flashdata('mensaje'); ?></h5>
         </div>
     <?php } ?>
+    <!-- Proximos cobros -->
+        <?php if($proximos != false){ ?>
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>Proximos cobros</h4></li>
+            <?php foreach ($proximos->result() as $contrato) { ?>                
+            <li id="<?= $contrato->contract_id ?>" class="collection-item">
+                <div>
+                    <a href="contratos/ver/<?= $contrato->contract_id ?>">Contrato Nro. <?= $contrato->contract_id ?></a>
+                    <a style="display: none" class="secondary-content btn-edit" href="clientes/editar/<?= $contrato->contract_id ?>" >
+                        <i class="material-icons green-text">edit</i>
+                    </a>
+                </div>
+            </li>        
+            <?php } ?>
+        </ul>    
+    <?php }else{  ?>
+        <h3>No se encontró ningun contrato, empieza creando uno.</h3>
+    <?php } ?>      
+    <!--  Contratos -->
 	<?php if($contratos != false){ ?>
         <ul class="collection with-header">
             <li class="collection-header"><h4>Todos los contratos</h4></li>

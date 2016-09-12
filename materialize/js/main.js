@@ -1,5 +1,6 @@
 $(document).ready(function(){
     $(".button-collapse").sideNav();
+    $('select').material_select();
     $('input[type="submit"]').on('click', function(){
         $('.message').css({'display': 'none'});
         $('.progress').css({'display': 'block'})

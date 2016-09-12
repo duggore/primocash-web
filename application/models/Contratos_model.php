@@ -10,6 +10,7 @@ class Contratos_model extends CI_Model
     function create($data){
         $datos = array( 
                 'customer_id'           => $data['customer_id'], 
+                'customer_name'         => $data['customer_name'],
                 'date_initial'          => $data['date_initial'], 
                 'capital'               => $data['capital'], 
                 'percentage'            => $data['percentage'], 
@@ -45,15 +46,24 @@ class Contratos_model extends CI_Model
             }
         }
     }
+    function auditory($data)
+    {
+        $datos = array( 
+                'contract_id'           => $data['contract_id'],
+                'customer_id'           => $data['customer_id'], 
+                'customer_name'         => $data['customer_name'],
+                'date_initial'          => $data['date_initial'], 
+                'capital'               => $data['capital'], 
+                'percentage'            => $data['percentage'], 
+                'division'              => $data['division'],
+                'guarantee'             => $data['guarantee'],
+                'username_register'     => $data['username_register'],
+                'username_update'       => $data['username_update']
+            );
+        $this->db->insert('audit_contracts', $datos);
+    }
     function delete($id){
         $this->db->delete('customers', array('customer_id' => $id));
-    }
-    function create_account($data){
-        $datos = array( 'currency'          => $data['currency'],
-                        'customer_id'       => $data['customer_id'],
-                        'username_register' => $data['username']
-                      );
-        $this->db->insert('customer_accounts', $datos);
     }
 	function read_all(){
         $this->db->order_by('contract_id', 'ASC');
@@ -61,11 +71,44 @@ class Contratos_model extends CI_Model
 		if($query -> num_rows() > 0) return $query;
 		else return false;
 	}
-    function read($id){
-        $this->db->where('contract_id', $id);
-        $query = $this->db->get('contracts');
+    function read($id){ 
+        $query = $this->db->query('
+                                    SELECT  A.contract_id,
+                                            A.customer_id,
+                                            A.date_initial,
+                                            A.capital,
+                                            A.division,
+                                            A.guarantee,
+                                            A.percentage,
+                                            A.date_register,
+                                            A.username_register,
+                                            B.customer_name,
+                                            B.customer_phone
+                                    FROM contracts as A
+                                        LEFT JOIN customers as B
+                                            ON B.customer_id    = A.customer_id
+                                    WHERE A.contract_id     = '.$id.'
+                                ');
         $result = $query->row();
         if($query -> num_rows() > 0) return $result;
+        else return false;
+    }
+    function cuotas($id){
+        $this->db->order_by('contract_fee', 'ASC');
+        $this->db->where('contract_id', $id);
+        $query = $this->db->get('contract_details');
+        if($query -> num_rows() > 0) return $query;
+        else return false;
+    }
+    function proximos(){
+        $query = $this->db->query('
+                                    SELECT * 
+                                    FROM `contract_details`  
+                                    WHERE payment_date > NOW() 
+                                    ORDER BY payment_date
+                                    LIMIT 5
+                                 ');
+        if($query -> num_rows() > 0) return $query;
         else return false;
     }
     function read_email($email)
@@ -86,30 +129,10 @@ class Contratos_model extends CI_Model
     }
     function update($data){
         $datos = array(
-                'customer_document'     => $data['document'], 
-                'customer_name'         => $data['name'], 
-                'customer_email'        => $data['email'], 
-                'customer_address'      => $data['address'], 
-                'customer_phone'        => $data['phone']
-            );
-        
-        $this->db->where('customer_id', $data['id']);
-        $this->db->update('customers', $datos); 
-    }
-    //Auditoria clientes
-    function auditory($data)
-    {
-        $datos = array(
-                        'customer_id'       => $data['id'],
-                        'customer_document' => $data['document'],
-                        'customer_name'     => $data['name'],
-                        'customer_email'    => $data['email'],
-                        'customer_address'  => $data['address'],
-                        'customer_phone'    => $data['phone'],
-                        'date_register'     => $data['date_register'],
-                        'event'             => $data['event'],
-                        'username_update'   => $data['username']
-                      );
-        $this->db->insert('audit_customer', $datos);
+                'customer_id'     => $data['customer_id'], 
+                'customer_name'   => $data['customer_name'], 
+            );        
+        $this->db->where('contract_id', $data['contract_id']);
+        $this->db->update('contracts', $datos); 
     }
 }
