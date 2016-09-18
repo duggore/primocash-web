@@ -16,15 +16,21 @@
         <?php if($proximos != false){ ?>
         <ul class="collection with-header">
             <li class="collection-header"><h4>Proximos cobros</h4></li>
-            <?php foreach ($proximos->result() as $contrato) { ?>                
-            <li id="<?= $contrato->contract_id ?>" class="collection-item">
-                <div>
-                    <a href="contratos/ver/<?= $contrato->contract_id ?>">Contrato Nro. <?= $contrato->contract_id ?></a>
-                    <a style="display: none" class="secondary-content btn-edit" href="clientes/editar/<?= $contrato->contract_id ?>" >
-                        <i class="material-icons green-text">edit</i>
-                    </a>
-                </div>
-            </li>        
+            <?php foreach ($proximos->result() as $contrato) { 
+                if($contrato->customer_name == ''){
+                    $cliente = 'No encontrado';
+                }else{
+                    $cliente = $contrato->customer_name;
+                }
+            ?>     
+            <li id="<?= $contrato->contract_id  ?>" class="collection-item avatar">
+                <i class="material-icons circle">description</i>
+                <span class="title"><a href="contratos/ver/<?= $contrato->contract_id ?>">Contrato Nro. <?= $contrato->contract_id ?></a></span>
+                <p>Cliente: <?= $cliente ?> <br>
+                    Monto cuota: <?= $contrato->amount ?> $USD
+                </p>
+                <a href="#!" class="secondary-content">Fecha de pago: <?= $contrato->payment_date ?></a>
+            </li>
             <?php } ?>
         </ul>    
     <?php }else{  ?>
@@ -34,15 +40,19 @@
 	<?php if($contratos != false){ ?>
         <ul class="collection with-header">
             <li class="collection-header"><h4>Todos los contratos</h4></li>
-            <?php foreach ($contratos->result() as $contrato) { ?>                
-            <li id="<?= $contrato->contract_id ?>" class="collection-item">
-                <div>
-                    <a href="contratos/ver/<?= $contrato->contract_id ?>">Contrato Nro. <?= $contrato->contract_id ?></a>
-                    <a style="display: none" class="secondary-content btn-edit" href="clientes/editar/<?= $contrato->contract_id ?>" >
-                        <i class="material-icons green-text">edit</i>
-                    </a>
-                </div>
-            </li>        
+            <?php foreach ($contratos->result() as $contrato) { 
+                if($contrato->customer_name == ''){
+                    $cliente = 'No encontrado';
+                }else{
+                   $cliente =  $contrato->customer_name;
+                }
+            ?>                
+            <li id="<?= $contrato->contract_id  ?>" class="collection-item avatar">
+                <i class="material-icons circle">description</i>
+                <span class="title"><a href="contratos/ver/<?= $contrato->contract_id ?>">Contrato Nro. <?= $contrato->contract_id ?></a></span>
+                <p>Cliente: <?= $cliente ?> <br>
+                </p> 
+            </li>   
             <?php } ?>
         </ul>    
     <?php }else{  ?>

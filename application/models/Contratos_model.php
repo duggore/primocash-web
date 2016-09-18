@@ -46,6 +46,50 @@ class Contratos_model extends CI_Model
             }
         }
     }
+    function recalcular($data)
+    {
+        $updates = array(
+                        'percentage'            => $data['percentage']        
+                        );
+        $this->db->where('contract_id', $data['contract_id']);
+        $this->db->update('contracts', $updates); 
+        $datos = array( 
+                'customer_id'           => $data['customer_id'], 
+                'customer_name'         => $data['customer_name'],
+                'date_initial'          => $data['date_initial'], 
+                'capital'               => $data['capital'], 
+                'percentage'            => $data['percentage'], 
+                'division'              => $data['fraccionamiento'],
+                'guarantee'             => $data['guarantee'],
+                'username_register'     => $data['username']
+            );
+
+        /*
+        **Insercion de las cuotas
+        */
+        $fecha = $datos['date_initial'];
+        $interes_mensual = (($datos['capital'] * $datos['percentage']) /100);
+        $ultima_cuota    = $interes_mensual + $datos['capital'];
+        //ciclo de insercion de cuotas
+        for($i = 0; $i < $datos['division']; $i++){
+            $fecha = strtotime ( '+1 month', strtotime ( $fecha ) ) ;
+            $fecha = date ( 'Y-m-j' , $fecha );
+            //arreglo de variables de la cuota
+            $item = array(  'contract_id'   => $contract_id,
+                            'contract_fee'  => ($i + 1),
+                            'payment_date'  => $fecha,
+                            'username_register'     => $data['username']
+                         );
+
+            if($i != ($datos['division'] - 1)){
+                $item['amount'] = $interes_mensual;
+                $this->db->insert('contract_details', $item);
+            }else{
+                $item['amount'] = $ultima_cuota;  
+                $this->db->insert('contract_details', $item);
+            }
+        }
+    }
     function auditory($data)
     {
         $datos = array( 
@@ -57,6 +101,7 @@ class Contratos_model extends CI_Model
                 'percentage'            => $data['percentage'], 
                 'division'              => $data['division'],
                 'guarantee'             => $data['guarantee'],
+                'date_register'         => $data['date_register'],
                 'username_register'     => $data['username_register'],
                 'username_update'       => $data['username_update']
             );
@@ -65,9 +110,17 @@ class Contratos_model extends CI_Model
     function delete($id){
         $this->db->delete('customers', array('customer_id' => $id));
     }
+    function delete_details($id)
+    {
+        $this->db->delete('contract_details', array('contract_id' => $id));   
+    }
 	function read_all(){
-        $this->db->order_by('contract_id', 'ASC');
-        $query = $this->db->get('contracts');
+        $query = $this->db->query('SELECT   A.contract_id,
+                                            B.customer_name
+                                   FROM contracts AS A
+                                    LEFT JOIN customers AS B
+                                        ON B.customer_id = A.customer_id
+                                   ORDER BY contract_id ASC');
 		if($query -> num_rows() > 0) return $query;
 		else return false;
 	}
@@ -79,7 +132,7 @@ class Contratos_model extends CI_Model
                                             A.capital,
                                             A.division,
                                             A.guarantee,
-                                            A.percentage,
+                                            A.percentage, 
                                             A.date_register,
                                             A.username_register,
                                             B.customer_name,
@@ -102,8 +155,15 @@ class Contratos_model extends CI_Model
     }
     function proximos(){
         $query = $this->db->query('
-                                    SELECT * 
-                                    FROM `contract_details`  
+                                    SELECT  A.contract_id,
+                                            A.payment_date,
+                                            A.amount,
+                                            C.customer_name
+                                    FROM contract_details AS A
+                                        LEFT JOIN contracts AS B
+                                            ON B.contract_id = A.contract_id
+                                        LEFT JOIN customers AS C
+                                            ON C.customer_id = B.customer_id
                                     WHERE payment_date > NOW() 
                                     ORDER BY payment_date
                                     LIMIT 5

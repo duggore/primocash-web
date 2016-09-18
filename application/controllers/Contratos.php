@@ -100,9 +100,37 @@ class Contratos extends CI_Controller {
 					  'username_register'	=> $contrato->username_register,
 					  'username_update'		=> $this->session->userdata('username')
 					 );
+		//Insertar auditoria
 		$this->Contratos_model->auditory($data);
+		//Actualizar 
 		$this->Contratos_model->update($data);
 		$this->session->set_flashdata('message', 'El cliente para este contrato fue actualizado correctamente');
+		redirect('contratos/ver/'. $contract_id);
+	}
+	public function recalcular_cuotas(){
+		$contract_id = $this->input->post('contract_id');
+		$new_percentage = $this->input->post('new_percentage');
+		//Leer el contrato a actualizar
+		$contrato = $this->Contratos_model->read($contract_id);
+		//Eliminiar todas las cuotas anteriores
+		$this->Contratos_model->delete_details($contract_id);
+		$data = array(
+					  'contract_id' 		=> $contract_id, 
+					  'customer_id' 		=> $contrato->customer_id, 
+					  'customer_name' 		=> $contrato->customer_name,
+					  'date_initial' 		=> $contrato->date_initial,
+					  'capital'				=> $contrato->capital,
+					  'percentage'			=> $contrato->percentage,
+					  'division'			=> $contrato->division,
+					  'guarantee'			=> $contrato->guarantee,
+					  'date_register'		=> $contrato->date_register,
+					  'username_register'	=> $contrato->username_register,
+					  'username_update'		=> $this->session->userdata('username')
+					 );
+		//Insertar auditoria
+		$this->Contratos_model->auditory($data);
+		//Mensaje para el usuario
+		$this->session->set_flashdata('message', 'Las cuotas fueron recalculadas correctamente, por favor revise');
 		redirect('contratos/ver/'. $contract_id);
 	}
 }

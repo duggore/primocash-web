@@ -66,26 +66,51 @@
             </div>
         </div>
         <div class="col s12 m6 l3">
-            <div class="card-panel">
-                <span>Porcentaje: <?= $contrato->percentage ?>% mensual</span>
+            <div class="card">
+                <div class="card-content">
+                    <span>Porcentaje: <?= $contrato->percentage ?>% mensual </span>                    
+                </div>    
+                <div class="card-action">
+                    <a href="#edit_percentage" class="valign-wrapper modal-trigger">
+                        <i class="material-icons valign">edit</i>
+                        <span class="valign">Editar</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
     <div class="divider"></div>
     <h4>Cuotas</h4>
     <div class="row">
-    <?php foreach ($cuotas->result() as $cuota) { ?>  
-        <div class="col s12 m6">
-          <div class="card">
-            <div class="card-content">
-                <span class="card-title">Cuota Nro:  <?= $cuota->contract_fee ?> 
-                    <span style="font-size: 16px; float:right;"> Fecha de pago: <?= $cuota->payment_date ?></span>
-                </span>
-                <p>Monto a pagar: <?= $cuota->amount ?> $USD</p>
-                <p></p>
+        <?php foreach ($cuotas->result() as $cuota) { ?>  
+            <div class="col s12 m6">
+              <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Cuota Nro:  <?= $cuota->contract_fee ?> 
+                        <span style="font-size: 16px; float:right;"> Fecha de pago: <?= $cuota->payment_date ?></span>
+                    </span>
+                    <p>Monto a pagar: <?= $cuota->amount ?> $USD</p>
+                    <p></p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-    <?php } ?>
+        <?php } ?>
     </div>
 </section>
+<!-- Modal Structure -->
+<div id="edit_percentage" class="modal">
+    <form action="../recalcular_cuotas" method="post">
+        <div class="modal-content">
+            <h4>Ingresa el nuevo porcentaje</h4>  
+            <div class="divider"></div>
+            <div class="input-field col s12">
+                <input type="hidden" name="contract_id" value="<?= $contrato->contract_id ?>">
+                <input id="porcentaje" name="new_percentage" type="text" class="porcentaje">
+                <label for="porcentaje">Porcentaje</label>
+            </div>          
+        </div>
+        <div class="modal-footer">
+            <input type="submit" class="modal-action modal-close waves-effect waves-green btn-flat"  value="Recalcular cuotas" />
+        </div>
+    </form>
+</div>
