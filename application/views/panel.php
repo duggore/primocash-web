@@ -6,4 +6,5 @@
 	</div>
 </nav>
 <section class="container">
+    <h4>Bienvenido de nuevo <?= $username ?></h4>
 </section>
