@@ -22,7 +22,7 @@
     		<?php foreach ($clientes->result() as $cliente) { ?>				
             <li id="<?= $cliente->customer_id ?>" class="collection-item">
             	<div>
-            		<a href="#!"><?= $cliente->customer_name ?></a>
+            		<a href="clientes/ver/<?= $cliente->customer_id ?>"><?= $cliente->customer_name ?></a>
     	        	<a class="secondary-content btn-edit" href="clientes/editar/<?= $cliente->customer_id ?>" >
     	        		<i class="material-icons green-text">edit</i>
     	        	</a>

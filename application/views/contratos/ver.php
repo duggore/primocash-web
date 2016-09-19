@@ -70,19 +70,22 @@
                 <div class="card-content">
                     <span>Porcentaje: <?= $contrato->percentage ?>% mensual </span>                    
                 </div>    
+                <?php if($contrato->customer_id){ ?>
                 <div class="card-action">
                     <a href="#edit_percentage" class="valign-wrapper modal-trigger">
                         <i class="material-icons valign">edit</i>
                         <span class="valign">Editar</span>
                     </a>
                 </div>
+                <?php } ?>
             </div>
         </div>
     </div>
     <div class="divider"></div>
     <h4>Cuotas</h4>
     <div class="row">
-        <?php foreach ($cuotas->result() as $cuota) { ?>  
+        <?php if($cuotas != false){
+            foreach ($cuotas->result() as $cuota) { ?>  
             <div class="col s12 m6">
               <div class="card">
                 <div class="card-content">
@@ -94,7 +97,15 @@
                 </div>
               </div>
             </div>
-        <?php } ?>
+            <?php  } }else{ ?>
+            <div class="col s12 m6">
+              <div class="card">
+                <div class="card-content">
+                    <span class="card-title">No se encontraron cuotas </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
     </div>
 </section>
 <!-- Modal Structure -->

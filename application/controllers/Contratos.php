@@ -32,6 +32,8 @@ class Contratos extends CI_Controller {
 		$data = array();
 		$data['username'] = $this->session->userdata('username');
 		$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
+		//Obtener todos los clientes
+		$data['clientes'] = $this->Clientes_model->read_all();
 		$this->load->view('template/inicio_panel', $data);
 		$this->load->view('contratos/nuevo');
 		$this->load->view('template/fin_panel');
@@ -43,16 +45,21 @@ class Contratos extends CI_Controller {
 		if($customer_id){
 			$data = array(	
 						'customer_id' 		=> $customer_id,
-						'customer_name'		=> $this->input->post('customer_name'),
 						'date_initial' 		=> $date_initial,
 						'capital' 			=> $this->input->post('capital'),
 						'percentage' 		=> $this->input->post('percentage'),
-						'fraccionamiento' 	=> $this->input->post('fraccionamiento'),
+						'division'		 	=> $this->input->post('fraccionamiento'),
 						'guarantee'			=> $this->input->post('guarantee'),
-						'username' 			=> $this->session->userdata('username')
+						'username_register'	=> $this->session->userdata('username')
 					 );
-			$this->session->set_flashdata('message', 'Contrato creado correctamente');
-			$this->Contratos_model->create($data);
+			$contract_id = $this->Contratos_model->create($data);
+			$this->Contratos_model->cuotas(	$contract_id, 
+											$data['capital'], 
+											$data['division'], 
+											$data['percentage'], 
+											$data['date_initial'], 
+											$data['username_register']);
+			$this->session->set_flashdata('message', 'Contrato ' . $contract_id . ' creado correctamente');
 			redirect('contratos');
 		}else{
 			$this->session->set_flashdata('message', 'No hemos encontrado el ID del cliente, favor revisar los datos o comunicarse con el encargado del sistema');
@@ -68,7 +75,7 @@ class Contratos extends CI_Controller {
 			//Datos especificos
 			$data['contrato'] = $this->Contratos_model->read($id);
 			//Cuotas 
-			$data['cuotas'] = $this->Contratos_model->cuotas($id);
+			$data['cuotas'] = $this->Contratos_model->getCuotas($id);
 			//Clientes 
 			$data['clientes'] = $this->Clientes_model->read_all();
 			//Plantilla
@@ -97,6 +104,7 @@ class Contratos extends CI_Controller {
 					  'division'			=> $contrato->division,
 					  'guarantee'			=> $contrato->guarantee,
 					  'date_register'		=> $contrato->date_register,
+					  'event'				=> 'Actualizacion del cliente',
 					  'username_register'	=> $contrato->username_register,
 					  'username_update'		=> $this->session->userdata('username')
 					 );
@@ -120,15 +128,23 @@ class Contratos extends CI_Controller {
 					  'customer_name' 		=> $contrato->customer_name,
 					  'date_initial' 		=> $contrato->date_initial,
 					  'capital'				=> $contrato->capital,
-					  'percentage'			=> $contrato->percentage,
+					  'percentage'			=> $new_percentage,
 					  'division'			=> $contrato->division,
 					  'guarantee'			=> $contrato->guarantee,
 					  'date_register'		=> $contrato->date_register,
+					  'event'				=> 'Las cuotas fueron recalculadas',
 					  'username_register'	=> $contrato->username_register,
 					  'username_update'		=> $this->session->userdata('username')
 					 );
 		//Insertar auditoria
 		$this->Contratos_model->auditory($data);
+		//Recalcular nuevas cuotas
+		$this->Contratos_model->cuotas(	$contract_id, 
+										$data['capital'], 
+										$data['division'], 
+										$data['percentage'], 
+										$data['date_initial'], 
+										$data['username_register']);
 		//Mensaje para el usuario
 		$this->session->set_flashdata('message', 'Las cuotas fueron recalculadas correctamente, por favor revise');
 		redirect('contratos/ver/'. $contract_id);
