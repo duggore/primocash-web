@@ -10,6 +10,7 @@ class Clientes extends CI_Controller {
 		}else{
 			$this->load->model('Usuarios_model');
 			$this->load->model('Clientes_model');
+			$this->load->model('Contratos_model');
 		}
 	}
 	public function index()
@@ -20,6 +21,18 @@ class Clientes extends CI_Controller {
 		$data['clientes'] = $this->Clientes_model->read_all();
 		$this->load->view('template/inicio_panel', $data);
 		$this->load->view('clientes/index');
+		$this->load->view('template/fin_panel');
+	}
+	public function ver($customer_id){
+		$data = array();
+		$data['username'] = $this->session->userdata('username');
+		$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
+		//Datos del cliente
+		$data['cliente'] = $this->Clientes_model->read($customer_id);
+		//Contratos del cliente
+		$data['contratos'] = $this->Contratos_model->getContractClient($customer_id);
+		$this->load->view('template/inicio_panel', $data);
+		$this->load->view('clientes/ver');
 		$this->load->view('template/fin_panel');
 	}
 	public function delete($id){

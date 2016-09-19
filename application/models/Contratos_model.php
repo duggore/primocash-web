@@ -140,12 +140,11 @@ class Contratos_model extends CI_Model
         if($query -> num_rows() > 0) return $query;
         else return false;
     }
-    function read_email($email)
+    function getContractClient($customer_id)
     {
-        $this->db->where('customer_email', $email);
-        $query = $this->db->get('customers');
-        $result = $query->row();
-        if($query -> num_rows() > 0) return $result;
+        $this->db->where('customer_id', $customer_id);
+        $query = $this->db->get('contracts');
+        if($query -> num_rows() > 0) return $query;
         else return false;
     }
     function read_phone($phone)
