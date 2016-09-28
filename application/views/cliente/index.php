@@ -2,7 +2,7 @@
     <div class="nav-wrapper">
       <div class="col s12">
         <a href="panel" class="breadcrumb">Inicio</a>
-        <a href="clientes" class="breadcrumb">Clientes</a>
+        <a href="#!" class="breadcrumb">Clientes</a>
       </div>
     </div>
 </nav>
@@ -22,8 +22,8 @@
     		<?php foreach ($clientes->result() as $cliente) { ?>				
             <li id="<?= $cliente->customer_id ?>" class="collection-item">
             	<div>
-            		<a href="clientes/ver/<?= $cliente->customer_id ?>"><?= $cliente->customer_name ?></a>
-    	        	<a class="secondary-content btn-edit" href="clientes/editar/<?= $cliente->customer_id ?>" >
+            		<a href="cliente/ver/<?= $cliente->customer_id ?>"><?= $cliente->customer_name ?></a>
+    	        	<a class="secondary-content btn-edit" href="cliente/editar/<?= $cliente->customer_id ?>" >
     	        		<i class="material-icons green-text">edit</i>
     	        	</a>
             	</div>
@@ -35,5 +35,5 @@
     <?php } ?>        
 </section>
 <div class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light green lighten-1" href="clientes/nuevo"><i class="material-icons">add</i></a>
+    <a class="btn-floating btn-large waves-effect waves-light green lighten-1" href="cliente/nuevo"><i class="material-icons">add</i></a>
 </div>

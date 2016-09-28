@@ -51,5 +51,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 $route['confirmar-usuario/(:any)'] = 'registro/token/$1';
+
+//$route['cliente/(:any)/comprobante'] = 'clientes/comprobante/$1';
+
+$route['confirmar-usuario/(:any)'] = 'registro/token/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

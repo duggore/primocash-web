@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Clientes extends CI_Controller {
+class Cliente extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
@@ -9,16 +9,19 @@ class Clientes extends CI_Controller {
 			redirect('login');
 		}else{
 			$this->load->model('Usuarios_model');
-			$this->load->model('Clientes_model');
+			$this->load->model('M_Cliente');
 			$this->load->model('Contratos_model');
 		}
 	}
 	public function index()
 	{
+		//Data necesaria
 		$data = array();
 		$data['username'] = $this->session->userdata('username');
 		$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
-		$data['clientes'] = $this->Clientes_model->read_all();
+		//Lista de clientes
+		$data['clientes'] = $this->M_Cliente->read_all();
+		//Cargando vistas
 		$this->load->view('template/inicio_panel', $data);
 		$this->load->view('clientes/index');
 		$this->load->view('template/fin_panel');
@@ -28,17 +31,38 @@ class Clientes extends CI_Controller {
 		$data['username'] = $this->session->userdata('username');
 		$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
 		//Datos del cliente
-		$data['cliente'] = $this->Clientes_model->read($customer_id);
+		$data['cliente'] = $this->M_Cliente->read($customer_id);
 		//Contratos del cliente
 		$data['contratos'] = $this->Contratos_model->getContractClient($customer_id);
 		$this->load->view('template/inicio_panel', $data);
-		$this->load->view('clientes/ver');
+		$this->load->view('cliente/V_ver');
 		$this->load->view('template/fin_panel');
+	}
+	public function comprobante($customer_id){
+		//Data necesaria
+		$data = array();
+		$data['username'] = $this->session->userdata('username');
+		$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
+		//Algunas variables
+		$data['customer_id'] = $customer_id;
+		//Cargando vistas
+		$this->load->view('template/inicio_panel', $data);
+		$this->load->view('comprobante/V_nuevo');
+		$this->load->view('template/fin_panel');
+	}
+	public function recargar(){
+		$data = array(
+						'customer_id' 	=> $this->input->post('customer_id'),
+						'monto'			=> $this->input->post('monto') 
+				);
+		//$this->M_Cliente->recargar($data);
+		$this->session->set_flashdata('message', 'Saldo asignado correctamente');
+		redirect('cliente/ver/' . $data['customer_id']);
 	}
 	public function delete($id){
 		if ($id) {
 			//Obtener el ultimo estado del cliente
-			$customer = $this->Clientes_model->read($id);
+			$customer = $this->M_Cliente->read($id);
 			$data = array(
 							'id' 			=> $id,
 							'document' 		=> $customer->customer_document,
@@ -51,9 +75,9 @@ class Clientes extends CI_Controller {
 							'username' 	=> $this->session->userdata('username')
 			            );
 			//Insertar el cambio en la auditoria
-			$this->Clientes_model->auditory($data);
+			$this->M_Cliente->auditory($data);
 			//Borrar cliente
-			$this->Clientes_model->delete($id);
+			$this->M_Cliente->delete($id);
 			$this->session->set_flashdata('message', 'El cliente fue eliminado correctamente');
 			redirect('clientes');
 		}else{
@@ -70,7 +94,7 @@ class Clientes extends CI_Controller {
 	}
 	public function insertar(){
 		$phone = $this->input->post('phone');
-		$validate = $this->Clientes_model->read_phone($phone);
+		$validate = $this->M_Cliente->read_phone($phone);
 		if($validate->customer_phone == $phone)
 		{
 			//Seteo de mensaje para el usuario
@@ -86,7 +110,7 @@ class Clientes extends CI_Controller {
 						'username' 	=> $this->session->userdata('username')
 					 );
 			$this->session->set_flashdata('message', 'Cliente creado correctamente');
-			$this->Clientes_model->create($data);
+			$this->M_Cliente->create($data);
 		}
 		redirect('clientes');
 	}
@@ -95,7 +119,7 @@ class Clientes extends CI_Controller {
 			$data = array();
 			$data['username'] = $this->session->userdata('username');
 			$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
-			$data['cliente'] = $this->Clientes_model->read($id);
+			$data['cliente'] = $this->M_Cliente->read($id);
 			$this->load->view('template/inicio_panel', $data);
 			$this->load->view('clientes/editar');
 			$this->load->view('template/fin_panel');
@@ -106,9 +130,9 @@ class Clientes extends CI_Controller {
 	public function update($id){
 		$phone = $this->input->post('phone');
 		if($id){
-			$customer = $this->Clientes_model->read($id);
+			$customer = $this->M_Cliente->read($id);
 			if($customer){
-				$validate = $this->Clientes_model->read_phone($phone);
+				$validate = $this->M_Cliente->read_phone($phone);
 				if($validate->customer_phone == $phone)
 				{
 					//Seteo de mensaje para el usuario
@@ -127,9 +151,9 @@ class Clientes extends CI_Controller {
 							'username' 	=> $this->session->userdata('username')
 			            );
 					//Insertar el cambio en la auditoria
-					$this->Clientes_model->auditory($data);
+					$this->M_Cliente->auditory($data);
 					//Actualizar dartos del cliente
-					$this->Clientes_model->update($data);
+					$this->M_Cliente->update($data);
 					//Seteo de mensaje para el usuario
 					$this->session->set_flashdata('message', 'El cliente fué actualizado correctamente');
 					redirect('clientes/editar/'.$id);
