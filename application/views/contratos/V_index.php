@@ -18,15 +18,17 @@
             <li class="collection-header"><h4>Proximos cobros</h4></li>
             <?php foreach ($proximos->result() as $contrato) { 
                 if($contrato->customer_name == ''){
-                    $cliente = 'No encontrado';
+                    $cliente_id = '#!';
+                    $cliente_nombre = 'No encontrado';
                 }else{
-                    $cliente = $contrato->customer_name;
+                    $cliente_id     = $contrato->customer_id;
+                    $cliente_nombre = $contrato->customer_name;
                 }
             ?>     
             <li id="<?= $contrato->contract_id  ?>" class="collection-item avatar">
                 <i class="material-icons circle">description</i>
                 <span class="title"><a href="contratos/ver/<?= $contrato->contract_id ?>">Contrato Nro. <?= $contrato->contract_id ?></a></span>
-                <p>Cliente: <?= $cliente ?> <br>
+                <p> Cliente: <a href="<?= base_url() ?>cliente/ver/<?= $cliente_id ?>"> <?= $cliente_nombre ?> </a><br>
                     Monto cuota: <?= $contrato->amount ?> $USD
                 </p>
                 <a href="#!" class="secondary-content">Fecha de pago: <?= $contrato->payment_date ?></a>
@@ -42,15 +44,17 @@
             <li class="collection-header"><h4>Todos los contratos</h4></li>
             <?php foreach ($contratos->result() as $contrato) { 
                 if($contrato->customer_name == ''){
-                    $cliente = 'No encontrado';
+                    $cliente_id = '#!';
+                    $cliente_nombre = 'No encontrado';
                 }else{
-                   $cliente =  $contrato->customer_name;
+                    $cliente_id = $contrato->customer_id;
+                    $cliente_nombre =  $contrato->customer_name;
                 }
             ?>                
             <li id="<?= $contrato->contract_id  ?>" class="collection-item avatar">
                 <i class="material-icons circle">description</i>
                 <span class="title"><a href="contratos/ver/<?= $contrato->contract_id ?>">Contrato Nro. <?= $contrato->contract_id ?></a></span>
-                <p>Cliente: <?= $cliente ?> <br>
+                <p>Cliente: <a href="<?= base_url() ?>cliente/ver/<?= $cliente_id ?>"> <?= $cliente_nombre ?> </a> <br>
                 </p> 
             </li>   
             <?php } ?>

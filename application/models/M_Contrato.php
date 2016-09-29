@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Contratos_model extends CI_Model
+class M_Contrato extends CI_Model
 {
 	function __construct()
 	{
@@ -84,11 +84,13 @@ class Contratos_model extends CI_Model
     }
 	function read_all(){
         $query = $this->db->query('SELECT   A.contract_id,
+                                            B.customer_id,
                                             B.customer_name
                                    FROM contracts AS A
                                     LEFT JOIN customers AS B
                                         ON B.customer_id = A.customer_id
                                    ORDER BY contract_id ASC');
+        //$this->output->enable_profiler(TRUE);
 		if($query -> num_rows() > 0) return $query;
 		else return false;
 	}
@@ -127,6 +129,7 @@ class Contratos_model extends CI_Model
                                     SELECT  A.contract_id,
                                             A.payment_date,
                                             A.amount,
+                                            C.customer_id,
                                             C.customer_name
                                     FROM contract_details AS A
                                         LEFT JOIN contracts AS B

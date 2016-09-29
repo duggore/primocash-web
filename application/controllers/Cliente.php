@@ -10,7 +10,7 @@ class Cliente extends CI_Controller {
 		}else{
 			$this->load->model('Usuarios_model');
 			$this->load->model('M_Cliente');
-			$this->load->model('Contratos_model');
+			$this->load->model('M_Contrato');
 		}
 	}
 	public function index()
@@ -23,7 +23,7 @@ class Cliente extends CI_Controller {
 		$data['clientes'] = $this->M_Cliente->read_all();
 		//Cargando vistas
 		$this->load->view('template/inicio_panel', $data);
-		$this->load->view('clientes/index');
+		$this->load->view('cliente/V_index');
 		$this->load->view('template/fin_panel');
 	}
 	public function ver($customer_id){
@@ -33,7 +33,7 @@ class Cliente extends CI_Controller {
 		//Datos del cliente
 		$data['cliente'] = $this->M_Cliente->read($customer_id);
 		//Contratos del cliente
-		$data['contratos'] = $this->Contratos_model->getContractClient($customer_id);
+		$data['contratos'] = $this->M_Contrato->getContractClient($customer_id);
 		$this->load->view('template/inicio_panel', $data);
 		$this->load->view('cliente/V_ver');
 		$this->load->view('template/fin_panel');

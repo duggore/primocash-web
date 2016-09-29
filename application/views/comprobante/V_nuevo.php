@@ -18,7 +18,7 @@
 	</div>
     <form action="../recargar" method="post">
 		<div class="row">
-	        <div class="input-field col s12 m6">
+	        <div class="input-field col s12">
                 <input type="hidden" name="customer_id" value="<?= $customer_id ?>">
 	          <input id="monto" name="monto" type="number" class="validate" required>
 	          <label for="monto">Monto</label>

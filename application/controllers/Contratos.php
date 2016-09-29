@@ -9,8 +9,8 @@ class Contratos extends CI_Controller {
 			redirect('login');
 		}else{
 			$this->load->model('Usuarios_model');
-			$this->load->model('Contratos_model');
-			$this->load->model('Clientes_model');
+			$this->load->model('M_Contrato');
+			$this->load->model('M_Cliente');
 		}
 	}
 	public function index()
@@ -19,12 +19,12 @@ class Contratos extends CI_Controller {
 		$data['username'] = $this->session->userdata('username');
 		$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
 		//Datos especificos
-		$data['contratos'] = $this->Contratos_model->read_all();
+		$data['contratos'] = $this->M_Contrato->read_all();
 		//Proximos contratos
-		$data['proximos'] = $this->Contratos_model->proximos();
+		$data['proximos'] = $this->M_Contrato->proximos();
 		//Plantilla
 		$this->load->view('template/inicio_panel', $data);
-		$this->load->view('contratos/index');
+		$this->load->view('contratos/V_index');
 		$this->load->view('template/fin_panel');
 	}
 	public function nuevo()	
@@ -33,7 +33,7 @@ class Contratos extends CI_Controller {
 		$data['username'] = $this->session->userdata('username');
 		$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
 		//Obtener todos los clientes
-		$data['clientes'] = $this->Clientes_model->read_all();
+		$data['clientes'] = $this->M_Cliente->read_all();
 		$this->load->view('template/inicio_panel', $data);
 		$this->load->view('contratos/nuevo');
 		$this->load->view('template/fin_panel');
@@ -52,8 +52,8 @@ class Contratos extends CI_Controller {
 						'guarantee'			=> $this->input->post('guarantee'),
 						'username_register'	=> $this->session->userdata('username')
 					 );
-			$contract_id = $this->Contratos_model->create($data);
-			$this->Contratos_model->cuotas(	$contract_id, 
+			$contract_id = $this->M_Contrato->create($data);
+			$this->M_Contrato->cuotas(	$contract_id, 
 											$data['capital'], 
 											$data['division'], 
 											$data['percentage'], 
@@ -73,11 +73,11 @@ class Contratos extends CI_Controller {
 			$data['username'] = $this->session->userdata('username');
 			$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
 			//Datos especificos
-			$data['contrato'] = $this->Contratos_model->read($id);
+			$data['contrato'] = $this->M_Contrato->read($id);
 			//Cuotas 
-			$data['cuotas'] = $this->Contratos_model->getCuotas($id);
+			$data['cuotas'] = $this->M_Contrato->getCuotas($id);
 			//Clientes 
-			$data['clientes'] = $this->Clientes_model->read_all();
+			$data['clientes'] = $this->M_Cliente->read_all();
 			//Plantilla
 			$this->load->view('template/inicio_panel', $data);
 			$this->load->view('contratos/ver');
@@ -90,9 +90,9 @@ class Contratos extends CI_Controller {
 		$contract_id = $this->input->post('contract_id');
 		$customer_id = $this->input->post('customer_id');
 		//Leer el contrato a actualizar
-		$contrato = $this->Contratos_model->read($contract_id);
+		$contrato = $this->M_Contrato->read($contract_id);
 		//Leer el nombre del cliente
-		$cliente = $this->Clientes_model->read($customer_id);
+		$cliente = $this->M_Cliente->read($customer_id);
 
 		$data = array(
 					  'contract_id' 		=> $contract_id, 
@@ -109,9 +109,9 @@ class Contratos extends CI_Controller {
 					  'username_update'		=> $this->session->userdata('username')
 					 );
 		//Insertar auditoria
-		$this->Contratos_model->auditory($data);
+		$this->M_Contrato->auditory($data);
 		//Actualizar 
-		$this->Contratos_model->update($data);
+		$this->M_Contrato->update($data);
 		$this->session->set_flashdata('message', 'El cliente para este contrato fue actualizado correctamente');
 		redirect('contratos/ver/'. $contract_id);
 	}
@@ -119,9 +119,9 @@ class Contratos extends CI_Controller {
 		$contract_id = $this->input->post('contract_id');
 		$new_percentage = $this->input->post('new_percentage');
 		//Leer el contrato a actualizar
-		$contrato = $this->Contratos_model->read($contract_id);
+		$contrato = $this->M_Contrato->read($contract_id);
 		//Eliminiar todas las cuotas anteriores
-		$this->Contratos_model->delete_details($contract_id);
+		$this->M_Contrato->delete_details($contract_id);
 		$data = array(
 					  'contract_id' 		=> $contract_id, 
 					  'customer_id' 		=> $contrato->customer_id, 
@@ -137,9 +137,9 @@ class Contratos extends CI_Controller {
 					  'username_update'		=> $this->session->userdata('username')
 					 );
 		//Insertar auditoria
-		$this->Contratos_model->auditory($data);
+		$this->M_Contrato->auditory($data);
 		//Recalcular nuevas cuotas
-		$this->Contratos_model->cuotas(	$contract_id, 
+		$this->M_Contrato->cuotas(	$contract_id, 
 										$data['capital'], 
 										$data['division'], 
 										$data['percentage'], 
