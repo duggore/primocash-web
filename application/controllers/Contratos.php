@@ -45,9 +45,9 @@ class Contratos extends CI_Controller {
 		//var_dump($data['contratos']->result());
 		foreach ($data['contratos']->result() as $contrato){
 			$fecha = $contrato->date_initial;
-			$fecha = strtotime ( '+1 month', strtotime ( $fecha ) ) ;
+			$fecha = strtotime ( '+'.$contrato->division.' month', strtotime ( $fecha ) ) ;
             $fecha = date ( 'Y-m-j' , $fecha );
-			$contract_fee = $contrato->division + 3;
+			$contract_fee = $contrato->division + 1;
 
 			$cuota = $this->M_Contrato->getCuota($contrato->contract_id, $contrato->division);
 			$cuota = $cuota->amount;
