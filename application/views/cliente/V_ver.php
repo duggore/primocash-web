@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <!-- Proximos cobros -->
+      <!-- Contratos del cliente -->
         <?php if($contratos != false){ ?>
         <ul class="collection with-header">
             <li class="collection-header"><h4>Contratos del cliente</h4></li>
@@ -33,7 +33,7 @@
             <li id="<?= $contrato->contract_id  ?>" class="collection-item avatar">
                 <i class="material-icons circle">description</i>
                 <span class="title">
-                    <a href="contratos/ver/<?= $contrato->contract_id ?>">Contrato Nro. <?= $contrato->contract_id ?></a>
+                    <a href="<?= base_url() ?>contratos/ver/<?= $contrato->contract_id ?>">Contrato Nro. <?= $contrato->contract_id ?></a>
                 </span>               
                 <p>Capital prestado: <?= $contrato->capital ?> $USD</p>
             </li>
@@ -45,7 +45,7 @@
 </section>
 <div class="fixed-action-btn">
     <a  class="btn-floating btn-large waves-effect waves-light green lighten-1" 
-        href="<?= base_url() ?>cliente/comprobante/<?= $cliente->customer_id ?>">
+        href="<?= base_url() ?>cliente/pago/<?= $cliente->customer_id ?>">
         <i class="material-icons">add</i>
     </a>
 </div>

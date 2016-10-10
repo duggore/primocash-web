@@ -38,7 +38,7 @@ class Cliente extends CI_Controller {
 		$this->load->view('cliente/V_ver');
 		$this->load->view('template/fin_panel');
 	}
-	public function comprobante($customer_id){
+	public function pago($customer_id){
 		//Data necesaria
 		$data = array();
 		$data['username'] = $this->session->userdata('username');
@@ -51,11 +51,17 @@ class Cliente extends CI_Controller {
 		$this->load->view('template/fin_panel');
 	}
 	public function recargar(){
+		$customer_id = $this->input->post('customer_id');
+		$saldo = $this->M_Cliente->saldo($customer_id);
+		$nuevo_saldo = $saldo->saldo + $this->input->post('monto');
 		$data = array(
-						'customer_id' 	=> $this->input->post('customer_id'),
-						'monto'			=> $this->input->post('monto') 
+						'customer_id' 	=> $customer_id,
+						'monto'			=> $this->input->post('monto'),
+						'nuevo_saldo'	=> $nuevo_saldo
 				);
-		//$this->M_Cliente->recargar($data);
+		$this->M_Cliente->comprobante($data);
+		$this->M_Cliente->recargar($data);
+		//var_dump($saldo);
 		$this->session->set_flashdata('message', 'Saldo asignado correctamente');
 		redirect('cliente/ver/' . $data['customer_id']);
 	}

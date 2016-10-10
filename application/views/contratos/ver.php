@@ -21,8 +21,9 @@
             <?php if($contrato->customer_id){ ?>
                   <div class="card">
                     <div class="card-content">
-                      <span class="card-title"><?= $contrato->customer_name ?></span>
+                      <span class="card-title"><a href="<?= base_url() ?>cliente/ver/<?= $contrato->customer_id ?>"> <?= $contrato->customer_name ?> </a></span>
                       <p>Telefono: <?= $contrato->customer_phone ?></p>
+                      <p>Saldo: <?= $contrato->saldo ?> $USD</p>
                     </div>
                   </div>            
             <?php }else{ ?>

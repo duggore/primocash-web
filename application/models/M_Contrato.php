@@ -22,6 +22,10 @@ class M_Contrato extends CI_Model
         return $contract_id;
         
     }
+    function create_ultima($datos){
+
+        $this->db->insert('contract_details', $datos);        
+    }
     function cuotas($contract_id, $capital, $division, $percentage, $date_initial, $username_register)
     {
         $updates = array(
@@ -36,23 +40,28 @@ class M_Contrato extends CI_Model
         */
         $fecha = $date_initial;
         $interes_mensual = (($capital * $percentage) /100);
-        $ultima_cuota    = $interes_mensual + $capital;
+        $ultima_cuota    = $capital;
         //ciclo de insercion de cuotas
-        for($i = 0; $i < $division; $i++){
-            $fecha = strtotime ( '+1 month', strtotime ( $fecha ) ) ;
-            $fecha = date ( 'Y-m-j' , $fecha );
+        for($i = 0; $i <= $division; $i++){
+            
+            
             //arreglo de variables de la cuota
             $item = array(  'contract_id'   => $contract_id,
-                            'contract_fee'  => ($i + 1),
-                            'payment_date'  => $fecha,
+                            'contract_fee'  => ($i + 1),                            
                             'username_register'     => $username_register
                          );
 
-            if($i != ($division - 1)){
+            if($i != ($division)){
+                $fecha = strtotime('+1 month', strtotime ($fecha));
+                $fecha = date ( 'Y-m-j' , $fecha );
                 $item['amount'] = $interes_mensual;
+                $item['payment_date']  = $fecha;
                 $this->db->insert('contract_details', $item);
             }else{
-                $item['amount'] = $ultima_cuota;  
+                $item['amount'] = $ultima_cuota;
+                $fecha = strtotime($fecha);
+                $fecha = date ( 'Y-m-j' , $fecha );
+                $item['payment_date']  = $fecha;  
                 $this->db->insert('contract_details', $item);
             }
         }
@@ -84,6 +93,9 @@ class M_Contrato extends CI_Model
     }
 	function read_all(){
         $query = $this->db->query('SELECT   A.contract_id,
+                                            A.division,
+                                            A.date_initial,
+                                            A.capital,
                                             B.customer_id,
                                             B.customer_name
                                    FROM contracts AS A
@@ -105,8 +117,10 @@ class M_Contrato extends CI_Model
                                             A.percentage, 
                                             A.date_register,
                                             A.username_register,
+                                            B.customer_id,
                                             B.customer_name,
-                                            B.customer_phone
+                                            B.customer_phone,
+                                            B.saldo
                                     FROM contracts as A
                                         LEFT JOIN customers as B
                                             ON B.customer_id    = A.customer_id
@@ -122,6 +136,18 @@ class M_Contrato extends CI_Model
         $this->db->where('contract_id', $id);
         $query = $this->db->get('contract_details');
         if($query -> num_rows() > 0) return $query;
+        else return false;
+    }
+    function getCuota($contract_id, $contract_fee)
+    {
+        $query = $this->db->query("SELECT amount
+                                   FROM contract_details
+                                   WHERE contract_id = '". $contract_id."' 
+                                   AND contract_fee = '". $contract_fee ."'
+                                   ");
+        $this->output->enable_profiler(TRUE);
+        $result = $query->row();
+        if($query -> num_rows() > 0) return $result;
         else return false;
     }
     function proximos(){
@@ -165,5 +191,10 @@ class M_Contrato extends CI_Model
             );        
         $this->db->where('contract_id', $data['contract_id']);
         $this->db->update('contracts', $datos); 
+    }
+    function actualiza_cuota($data){
+        $this->db->where('contract_id', $data['contract_id']);
+        $this->db->where('contract_fee', $data['contract_fee']);
+        $this->db->update('contract_details', array('amount' => $data['amount'])); 
     }
 }

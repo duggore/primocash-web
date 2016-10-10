@@ -38,6 +38,39 @@ class Contratos extends CI_Controller {
 		$this->load->view('contratos/nuevo');
 		$this->load->view('template/fin_panel');
 	}
+	public function reparar()
+	{
+		$data = array();
+		$data['contratos'] = $this->M_Contrato->read_all();
+		//var_dump($data['contratos']->result());
+		foreach ($data['contratos']->result() as $contrato){
+			$fecha = $contrato->date_initial;
+			$fecha = strtotime ( '+1 month', strtotime ( $fecha ) ) ;
+            $fecha = date ( 'Y-m-j' , $fecha );
+			$contract_fee = $contrato->division + 3;
+
+			$cuota = $this->M_Contrato->getCuota($contrato->contract_id, $contrato->division);
+			$cuota = $cuota->amount;
+			$capital = $contrato->capital;
+			$nueva_cuota = $cuota - $capital;
+
+			$datos  = array('contract_id' 	=> $contrato->contract_id,
+							'contract_fee' 	=> $contract_fee,
+							'amount'		=> $contrato->capital,
+							'payment_date'  => $fecha,
+							'username_register'	=> $this->session->userdata('username')
+							);
+			
+			$update = array('contract_id' 	=> $contrato->contract_id,
+							'contract_fee'  => $contrato->division,
+							'amount' 		=> $nueva_cuota
+							);
+			$this->M_Contrato->create_ultima($datos);
+			$this->M_Contrato->actualiza_cuota($update);
+			echo "Contrato nro " . $contrato->contract_id . " actualizado <br />";
+		}
+		echo "Todos los contratos fueron actualizados correctamente";
+	}
 	public function insertar(){
 		$date_initial = new DateTime($this->input->post('date_initial'));
 		$date_initial = $date_initial->format('Y-m-d');
@@ -60,7 +93,7 @@ class Contratos extends CI_Controller {
 											$data['date_initial'], 
 											$data['username_register']);
 			$this->session->set_flashdata('message', 'Contrato ' . $contract_id . ' creado correctamente');
-			redirect('contratos');
+			redirect(base_url() . 'contratos/ver/' . $contract_id);
 		}else{
 			$this->session->set_flashdata('message', 'No hemos encontrado el ID del cliente, favor revisar los datos o comunicarse con el encargado del sistema');
 			redirect('contratos/nuevo');

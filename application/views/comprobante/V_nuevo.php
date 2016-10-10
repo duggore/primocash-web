@@ -14,7 +14,7 @@
         </div>
     <?php } ?>
     <div class="row">
-		<h4 class="green-text text-darken-2">Nuevo comprobante</h4>
+		<h4 class="green-text text-darken-2">Nuevo pago</h4>
 	</div>
     <form action="../recargar" method="post">
 		<div class="row">
