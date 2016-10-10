@@ -9,7 +9,7 @@ class Panel extends CI_Controller {
 			redirect('login');
 		}else{
 			$this->load->model('Usuarios_model');
-			$this->load->model('Clientes_model');
+			$this->load->model('M_Cliente');
 		}
 	}
 	public function index()

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Clientes_model extends CI_Model
+class M_Cliente extends CI_Model
 {
 	function __construct()
 	{
@@ -40,6 +40,28 @@ class Clientes_model extends CI_Model
         $result = $query->row();
         if($query -> num_rows() > 0) return $result;
         else return false;
+    }
+    function saldo($customer_id){
+        $query = $this->db->query(' SELECT saldo
+                                    FROM customers
+                                    WHERE customer_id = '.$customer_id);
+        //$this->output->enable_profiler(TRUE);
+        $result = $query->row();
+        if($query -> num_rows() > 0) return $result;
+        else return false;
+    }
+    function recargar($data){
+        $datos = array(
+                'saldo'           => $data['nuevo_saldo']
+        );
+        $this->db->where('customer_id', $data['customer_id']);
+        $this->db->update('customers', $datos); 
+    }
+    function comprobante($data){
+        $datos = array( 
+                'comprobante_monto'     => $data['monto']
+            );
+        $this->db->insert('comprobante', $datos);
     }
     function read_email($email)
     {

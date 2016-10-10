@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:8080/primocash/'; //Servidor de desarrollo - Jose Luis Rodriguez (www.esandex.com)
+$config['base_url'] = 'http://localhost:8080/primocash-web/'; //Servidor de desarrollo - Jose Luis Rodriguez (www.esandex.com)
 //$config['base_url'] = 'http://alfa.primocash.us/'; //Servidor Alfa 
 //$config['base_url'] = 'http://primocash.us/'; //Servidor de Produccion 
 
