@@ -12,10 +12,18 @@ $(document).ready(function(){
     $('.modal-trigger').leanModal();
     $('.btn-edit').on('click', editar);
     $('#cliente').focusout(buscar_cliente);
+    $('#preview').on('click', preview);
+    $('.pagar').on('click', pagar);
     clientes();    
     ultimo_visto();
-    $('#preview').on('click', preview);
 });
+function pagar(){
+    var cuota = $(this).attr('id');
+    $('#input_cuota').val(cuota);
+    $('#titulo_cuota').html(cuota)
+    $('#confirmacion').openModal();
+    return false;
+}
 function preview(){
     var cliente         = $('#cliente').val(),
         fecha_inicio    = $('#fecha_inicio').val(),

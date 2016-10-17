@@ -2,7 +2,7 @@
 	<div class="nav-wrapper">
 	  <div class="col s12">
 	    <a href="<?= base_url() ?>panel" class="breadcrumb">Inicio</a>
-	    <a href="<?= base_url() ?>clientes" class="breadcrumb">Clientes</a>
+	    <a href="<?= base_url() ?>cliente" class="breadcrumb">Clientes</a>
 	    <a href="#!" class="breadcrumb">Editar</a>
 	  </div>
 	</div>

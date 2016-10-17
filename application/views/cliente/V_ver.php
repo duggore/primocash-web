@@ -43,7 +43,7 @@
             <h5>No se encontró ningun contrato relacionado con este cliente.</h5>
         <?php } ?>
 </section>
-<div class="fixed-action-btn" style="display: none;">
+<div class="fixed-action-btn">
     <a  class="btn-floating btn-large waves-effect waves-light green lighten-1" 
         href="<?= base_url() ?>cliente/pago/<?= $cliente->customer_id ?>">
         <i class="material-icons">add</i>

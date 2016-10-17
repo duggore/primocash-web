@@ -38,6 +38,7 @@ class Contratos extends CI_Controller {
 		$this->load->view('contratos/nuevo');
 		$this->load->view('template/fin_panel');
 	}
+	/*
 	public function reparar()
 	{
 		$data = array();
@@ -70,6 +71,34 @@ class Contratos extends CI_Controller {
 			echo "Contrato nro " . $contrato->contract_id . " actualizado <br />";
 		}
 		echo "Todos los contratos fueron actualizados correctamente";
+	}*/
+	public function pagar()
+	{
+
+		$data = array(
+						'contract_id' 	=> $this->input->post('contract_id'),
+						'cuota'			=> $this->input->post('cuota')
+			);
+		$contrato = $this->M_Contrato->read($data['contract_id']);
+		$cuota = $this->M_Contrato->getCuota($data['contract_id'], $data['cuota']);
+		$saldo = $this->M_Cliente->saldo($cuota->customer_id);
+		$data['customer_id'] = $cuota->customer_id;
+		if($saldo->saldo > $cuota->amount){
+			if($contrato->aprobado){
+
+			}
+			$data['nuevo_saldo'] = $saldo->saldo - $cuota->amount;
+			//Actualizar estado de cuota
+			$this->M_Contrato->pagar($data);
+			//Restar saldo del cliente
+			$this->M_Cliente->update_saldo($data);
+			//var_dump($saldo);
+			$this->session->set_flashdata('message', 'Cuota pagada correctamente, saldo del cliente actualizado');
+		}else{
+			$this->session->set_flashdata('message', 'El cliente no cuenta con saldo suficiente para hacer esta transacción');
+		}
+		
+		redirect('contratos/ver/' . $data['contract_id']);
 	}
 	public function insertar(){
 		$date_initial = new DateTime($this->input->post('date_initial'));
@@ -113,7 +142,7 @@ class Contratos extends CI_Controller {
 			$data['clientes'] = $this->M_Cliente->read_all();
 			//Plantilla
 			$this->load->view('template/inicio_panel', $data);
-			$this->load->view('contratos/ver');
+			$this->load->view('contratos/V_ver');
 			$this->load->view('template/fin_panel');
 		}else{
 			redirect('contratos');
@@ -144,7 +173,7 @@ class Contratos extends CI_Controller {
 		//Insertar auditoria
 		$this->M_Contrato->auditory($data);
 		//Actualizar 
-		$this->M_Contrato->update($data);
+		$this->M_Contrato->actualizar_cliente($data);
 		$this->session->set_flashdata('message', 'El cliente para este contrato fue actualizado correctamente');
 		redirect('contratos/ver/'. $contract_id);
 	}

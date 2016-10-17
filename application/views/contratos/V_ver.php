@@ -52,8 +52,11 @@
     <h4>Detalles del contrato</h4>
     <div class="row">
         <div class="col s12 m6 l3">
-            <div class="card-panel">
-                <span>Capital: <?= $contrato->capital ?> $USD</span>
+            <div class="card">
+                <div class="card-content">
+                    <span>Capital: <?= $contrato->capital ?> $USD</span>
+                </div>
+                
             </div>
         </div>
         <div class="col s12 m6 l3">
@@ -96,6 +99,19 @@
                     <p>Monto a pagar: <?= $cuota->amount ?> $USD</p>
                     <p></p>
                 </div>
+                <div class="card-action ">
+                    <?php if($cuota->pagado){ ?>
+                        <a href="#" class="valign-wrapper">
+                            <i class="material-icons valign" >done</i>
+                            <span>Pagado</span>
+                        </a>
+                    <?php }else{ ?>
+                        <a id="<?= $cuota->contract_fee ?>" href="#" class="pagar valign-wrapper">
+                            <i class="material-icons valign">payment</i>
+                            <span>Pagar</span>
+                        </a>
+                    <?php } ?>
+                </div>
               </div>
             </div>
             <?php  } }else{ ?>
@@ -123,6 +139,21 @@
         </div>
         <div class="modal-footer">
             <input type="submit" class="modal-action modal-close waves-effect waves-green btn-flat"  value="Recalcular cuotas" />
+        </div>
+    </form>
+</div>
+<!-- Confirmacion de pago -->
+<div id="confirmacion" class="modal">
+    <form action="../pagar" method="post">
+        <div class="modal-content">
+          <h4>Confirmación de pago cuota nro. <span id="titulo_cuota"></span></h4>
+          <p>¿Estas seguro que quieres pagar la cuota seleccionada?</p>
+          <input name="contract_id" type="hidden" value="<?= $contrato->contract_id ?>">
+          <input id="input_cuota" name="cuota" type="hidden">
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="modal-action modal-close waves-effect waves-green btn" value="Aceptar">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
         </div>
     </form>
 </div>

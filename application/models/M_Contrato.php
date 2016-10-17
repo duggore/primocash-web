@@ -66,6 +66,16 @@ class M_Contrato extends CI_Model
             }
         }
     }
+    function pagar($data)
+    {
+        $datos = array(
+                'pagado'         => 1
+            );        
+        $this->db->where('contract_id', $data['contract_id']);
+        $this->db->where('contract_fee', $data['cuota']);
+        $this->output->enable_profiler(TRUE);
+        $this->db->update('contract_details', $datos); 
+    }
     function auditory($data)
     {
         $datos = array( 
@@ -140,10 +150,15 @@ class M_Contrato extends CI_Model
     }
     function getCuota($contract_id, $contract_fee)
     {
-        $query = $this->db->query("SELECT amount
-                                   FROM contract_details
-                                   WHERE contract_id = '". $contract_id."' 
-                                   AND contract_fee = '". $contract_fee ."'
+        $query = $this->db->query("SELECT   A.amount,
+                                            C.customer_id
+                                   FROM contract_details AS A
+                                    INNER JOIN contracts AS B
+                                        ON B.contract_id = A.contract_id
+                                    INNER JOIN customers AS C
+                                        ON C.customer_id = B.customer_id
+                                   WHERE A.contract_id = '". $contract_id."' 
+                                   AND A.contract_fee = '". $contract_fee ."'
                                    ");
         $this->output->enable_profiler(TRUE);
         $result = $query->row();
@@ -184,10 +199,16 @@ class M_Contrato extends CI_Model
         if($query -> num_rows() > 0) return $result;
         else return false;
     }
-    function update($data){
+    function actualizar_cliente($data){
         $datos = array(
-                'customer_id'     => $data['customer_id'], 
-                'customer_name'   => $data['customer_name'], 
+                'customer_name'   => $data['customer_name']
+            );        
+        $this->db->where('contract_id', $data['contract_id']);
+        $this->db->update('contracts', $datos); 
+    }
+    function actualizar_contrato($data){
+        $datos = array(
+                'aprobado'   => 1 
             );        
         $this->db->where('contract_id', $data['contract_id']);
         $this->db->update('contracts', $datos); 

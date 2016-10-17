@@ -60,7 +60,7 @@ class Cliente extends CI_Controller {
 						'nuevo_saldo'	=> $nuevo_saldo
 				);
 		$this->M_Cliente->comprobante($data);
-		$this->M_Cliente->recargar($data);
+		$this->M_Cliente->update_saldo($data);
 		//var_dump($saldo);
 		$this->session->set_flashdata('message', 'Saldo asignado correctamente');
 		redirect('cliente/ver/' . $data['customer_id']);
@@ -127,7 +127,7 @@ class Cliente extends CI_Controller {
 			$data['menus_permitidos'] = $this->Usuarios_model->listar_menu_permitidos($this->session->userdata('id'));
 			$data['cliente'] = $this->M_Cliente->read($id);
 			$this->load->view('template/inicio_panel', $data);
-			$this->load->view('clientes/editar');
+			$this->load->view('cliente/V_editar');
 			$this->load->view('template/fin_panel');
 		}else{
 			redirect('clientes');

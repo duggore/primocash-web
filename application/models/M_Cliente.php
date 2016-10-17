@@ -50,16 +50,17 @@ class M_Cliente extends CI_Model
         if($query -> num_rows() > 0) return $result;
         else return false;
     }
-    function recargar($data){
+    function update_saldo($data){
         $datos = array(
-                'saldo'           => $data['nuevo_saldo']
+                'saldo' => $data['nuevo_saldo']
         );
         $this->db->where('customer_id', $data['customer_id']);
         $this->db->update('customers', $datos); 
     }
     function comprobante($data){
         $datos = array( 
-                'comprobante_monto'     => $data['monto']
+                'comprobante_monto'     => $data['monto'],
+                'customer_id'           => $data['customer_id']
             );
         $this->db->insert('comprobante', $datos);
     }
