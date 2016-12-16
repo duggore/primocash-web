@@ -1,1 +1,23 @@
-nav{padding:0 1em}.container{margin-bottom:100px}.message{padding:5px}.progress{display:none}.side-nav a{height:64px;line-height:64px}
+nav {
+  padding: 0 1em; }
+
+.container {
+  margin-bottom: 100px; }
+
+.message {
+  padding: 5px; }
+
+.progress {
+  display: none; }
+
+.side-nav a {
+  height: 64px;
+  line-height: 64px; }
+
+.tabs .tab a {
+  color: #1b5e20; }
+  .tabs .tab a:hover {
+    color: #81c784; }
+
+.tabs .indicator {
+  background-color: #1b5e20; }

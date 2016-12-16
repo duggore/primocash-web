@@ -179,7 +179,7 @@ class M_Contrato extends CI_Model
                                             ON C.customer_id = B.customer_id
                                     WHERE payment_date > NOW() 
                                     ORDER BY payment_date
-                                    LIMIT 5
+                                    LIMIT 10
                                  ');
         if($query -> num_rows() > 0) return $query;
         else return false;
@@ -201,8 +201,10 @@ class M_Contrato extends CI_Model
     }
     function actualizar_cliente($data){
         $datos = array(
+                'customer_id'     => $data['customer_id'],
                 'customer_name'   => $data['customer_name']
-            );        
+            );   
+        //$this->output->enable_profiler(TRUE);     
         $this->db->where('contract_id', $data['contract_id']);
         $this->db->update('contracts', $datos); 
     }

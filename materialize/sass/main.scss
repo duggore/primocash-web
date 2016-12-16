@@ -18,3 +18,15 @@ nav
 	height: 64px;
 	line-height: 64px;	
 }
+.tabs .tab a
+{
+	color: #1b5e20;
+	&:hover
+	{
+		color: #81c784;
+	}
+}
+.tabs .indicator
+{
+	background-color: #1b5e20;
+}
