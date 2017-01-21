@@ -11,10 +11,10 @@ $(document).ready(function(){
     });
     $('.modal-trigger').leanModal();
     $('.btn-edit').on('click', editar);
-    $('#cliente').focusout(buscar_cliente);
+    //$('#cliente').focusout(buscar_cliente);
     $('#preview').on('click', preview);
     $('.pagar').on('click', pagar);
-    clientes();    
+    //clientes();    
     ultimo_visto();
 });
 function pagar(){

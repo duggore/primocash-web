@@ -211,4 +211,40 @@ class Contratos extends CI_Controller {
 		$this->session->set_flashdata('message', 'Las cuotas fueron recalculadas correctamente, por favor revise');
 		redirect('contratos/ver/'. $contract_id);
 	}
+	public function amortizar(){
+		$contract_id = $this->input->post('contract_id');
+		$monto = $this->input->post('monto');
+		//Leer el contrato a actualizar
+		$contrato = $this->M_Contrato->read($contract_id);
+		$data = array(
+					  'contract_id' 		=> $contract_id, 
+					  'customer_id' 		=> $contrato->customer_id, 
+					  'customer_name' 		=> $contrato->customer_name,
+					  'date_initial' 		=> $contrato->date_initial,
+					  'capital'				=> $contrato->capital,
+					  'amortizado'			=> $monto,
+					  'percentage'			=> $new_percentage,
+					  'division'			=> $contrato->division,
+					  'guarantee'			=> $contrato->guarantee,
+					  'date_register'		=> $contrato->date_register,
+					  'event'				=> 'Las cuotas fueron recalculadas',
+					  'username_register'	=> $contrato->username_register,
+					  'username_update'		=> $this->session->userdata('username')
+					 );
+		//Insertar auditoria
+		$this->M_Contrato->auditory($data);
+		//Seleccionar saldo
+		$saldo = $this->M_Cliente->saldo($contrato->customer_id);
+		
+		if($saldo->saldo > $contrato->capital){
+			$data['nuevo_saldo'] = $saldo->saldo - $monto;
+			//Actualizar estado de cuota
+			$this->M_Contrato->amortizar($data);
+			//Restar saldo del cliente
+			$this->M_Cliente->update_saldo($data);
+		}
+		//Mensaje para el usuario
+		$this->session->set_flashdata('message', 'Las cuotas fueron recalculadas correctamente, por favor revise');
+		
+	}
 }

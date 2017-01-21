@@ -56,7 +56,12 @@
                 <div class="card-content">
                     <span>Capital: <?= $contrato->capital ?> $USD</span>
                 </div>
-                
+                <div class="card-action">
+                    <a href="#amortizar" class="valign-wrapper modal-trigger">
+                        <i class="material-icons valign">payment</i>
+                        <span class="valign">Amortizar</span>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="col s12 m6 l3">
@@ -89,12 +94,14 @@
     <h4>Cuotas</h4>
     <div class="row">
         <?php if($cuotas != false){
-            foreach ($cuotas->result() as $cuota) { ?>  
+            foreach ($cuotas->result() as $cuota) { 
+            $date = new DateTime($cuota->payment_date);
+        ?>  
             <div class="col s12 m6">
               <div class="card">
                 <div class="card-content">
                     <span class="card-title">Cuota Nro:  <?= $cuota->contract_fee ?> 
-                        <span style="font-size: 16px; float:right;"> Fecha de pago: <?= $cuota->payment_date ?></span>
+                        <span style="font-size: 16px; float:right;"> Fecha de pago: <?= $date->format('m-d-Y'); ?></span>
                     </span>
                     <p>Monto a pagar: <?= $cuota->amount ?> $USD</p>
                     <p></p>
@@ -139,6 +146,23 @@
         </div>
         <div class="modal-footer">
             <input type="submit" class="modal-action modal-close waves-effect waves-green btn-flat"  value="Recalcular cuotas" />
+        </div>
+    </form>
+</div>
+<!-- Modal Structure -->
+<div id="amortizar" class="modal">
+    <form action="../amortizar" method="post">
+        <div class="modal-content">
+            <h4>Ingresa el monto que quiere amortizar</h4>  
+            <div class="divider"></div>
+            <div class="input-field col s12">
+                <input type="hidden" name="contract_id" value="<?= $contrato->contract_id ?>">
+                <input id="monto" name="monto" type="text" class="porcentaje">
+                <label for="monto">Monto</label>
+            </div>          
+        </div>
+        <div class="modal-footer">
+            <input type="submit" class="modal-action modal-close waves-effect waves-green btn-flat"  value="Amortizar" />
         </div>
     </form>
 </div>

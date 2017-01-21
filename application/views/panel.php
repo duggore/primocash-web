@@ -19,14 +19,15 @@
                     $cliente_id     = $contrato->customer_id;
                     $cliente_nombre = $contrato->customer_name;
                 }
-            ?>     
+                $date = new DateTime($contrato->payment_date);
+            ?>      
             <li id="<?= $contrato->contract_id  ?>" class="collection-item avatar">
                 <i class="material-icons circle">description</i>
                 <span class="title"><a href="contratos/ver/<?= $contrato->contract_id ?>">Contrato Nro. <?= $contrato->contract_id ?></a></span>
                 <p> Cliente: <a href="<?= base_url() ?>cliente/ver/<?= $cliente_id ?>"> <?= $cliente_nombre ?> </a><br>
                     Monto cuota: <?= $contrato->amount ?> $USD
                 </p>
-                <a href="#!" class="secondary-content">Fecha de pago: <?= $contrato->payment_date ?></a>
+                <a href="#!" class="secondary-content">Fecha de pago: <?= $date->format('m-d-Y'); ?></a>
             </li>
             <?php } ?>
         </ul>    

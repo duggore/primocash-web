@@ -4,7 +4,6 @@
 	<meta charset="UTF-8">
 	<title>PrimoCash</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<link rel="icon" href="<?= base_url() ?>materialize/images/logo_100x100.png" type="image/png" >
 	<!--Import Google Icon Font-->
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<!--Import materialize.css-->

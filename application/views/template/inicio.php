@@ -15,12 +15,5 @@
     <nav class="green darken-4">
         <div class="nav-wrapper">
           <a href="#!" class="brand-logo">Primocash</a>
-          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a class="btn-large green" href="<?= base_url() ?>login">Iniciar Sesión</a></li>
-            </ul>
-            <ul class="side-nav" id="mobile-demo">
-                <li><a class="btn-large green" href="<?= base_url() ?>login">Iniciar Sesión</a></li>
-            </ul>
         </div>
     </nav>

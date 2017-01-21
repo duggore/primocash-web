@@ -39,7 +39,11 @@
                 <p> Cliente: <a href="<?= $cliente_id ?>"> <?= $cliente_nombre ?> </a><br>
                     Monto cuota: <?= $contrato->amount ?> $USD
                 </p>
-                <a href="#!" class="secondary-content">Fecha de pago: <?= $contrato->payment_date ?></a>
+                <?php 
+                    $date = new DateTime($contrato->payment_date);
+                    
+                ?>
+                <a href="#!" class="secondary-content">Fecha de pago: <?= $date->format('m-d-Y'); ?></a>
             </li>
             <?php } ?>
         </ul>    
