@@ -75,8 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	//'hostname' => 'localhost',
-	'hostname' => 'primocash.us',
+	'hostname' => 'localhost',
 	'username' => 'primocas_admin',
 	'password' => 'nabucodonosor',
 	'database' => 'primocas_alfa',
