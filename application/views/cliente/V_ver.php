@@ -44,8 +44,7 @@
         <?php } ?>
 </section>
 <div class="fixed-action-btn">
-    <a  class="btn-floating btn-large waves-effect waves-light green lighten-1" 
-        href="<?= base_url() ?>cliente/pago/<?= $cliente->customer_id ?>">
+    <a  class="btn-floating btn-large waves-effect waves-light green lighten-1" href="<?= base_url() ?>cliente/pago/<?= $cliente->customer_id ?>">
         <i class="material-icons">add</i>
     </a>
 </div>

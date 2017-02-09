@@ -14,7 +14,7 @@ $(document).ready(function(){
     //$('#cliente').focusout(buscar_cliente);
     $('#preview').on('click', preview);
     $('.pagar').on('click', pagar);
-    //clientes();    
+    
     ultimo_visto();
 });
 function pagar(){
@@ -64,8 +64,10 @@ function editar(){
     localStorage.setItem('ultimo', ultimo);
 }
 function ultimo_visto(){
+    console.log('Ultimo visto');
     var ultimo = localStorage.getItem('ultimo');
     var elemento = '#' + ultimo;
+
     console.log(elemento);
     if(ultimo != null){
         if($(elemento).length){
@@ -90,14 +92,7 @@ function permiso_menu(e, id_menu, id_user)
     var  url = "../permisoMenu/" + check + "/" + id_user + "/" + id_menu;
     window.location.href = url;
 }
-function clientes(){
-    console.log('Clientes fue ejecutado');
-    //$.getJSON("http://api.primocash.us/", function(data){
-    $.getJSON("http://localhost:8080/primocash-api/", function(data){
-        //console.log(data);
-        $('input.autocomplete.clientes').autocomplete(data);               
-    });
-}
+
 function prestamo(capital, porcentaje, meses, fecha_inicio){
             $('#cuotas').html('');
             var fecha       = new Date(fecha_inicio);
